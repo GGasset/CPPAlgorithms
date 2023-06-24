@@ -30,3 +30,5 @@
 *.exe
 *.out
 *.app
+/.vs/C++Algorithms/v17
+/x64/Debug
