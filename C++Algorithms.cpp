@@ -5,12 +5,14 @@
 #include "Algorithms.h"
 
 void stringToInteger();
+void validParenthesis();
 
 
 int main()
 {
-    char* input = (char*)malloc(sizeof(char) * 20);
-    std::string menu = "Enter a command mentioned below to execute a home-made program\n\"cancel\" to exit the program\n\"atoi\" basically a string to integer";
+    char* input = (char*)malloc(sizeof(char) * 100);
+    std::string menu = "Enter a command mentioned below to execute a home-made program\n\"cancel\" to exit the program\n\"atoi\" basically a string to integer\n";
+    menu += "\"valid_parenthesis\"";
     while (true)
     {
         std::cout << menu << "\n";
@@ -19,6 +21,8 @@ int main()
             break;
         if (!std::strcmp(input, "atoi"))
             stringToInteger();
+        if (!std::strcmp(input, "valid_parenthesis"))
+            validParenthesis();
     }
     free(input);
 }
@@ -43,6 +47,24 @@ void stringToInteger()
             std::cout << "Error while parsing the number";
         }
         std::cout << "\n\n";
+    }
+    free(input);
+}
+
+void validParenthesis()
+{
+    char* input = (char*)malloc(sizeof(char) * 2000);
+    while (true)
+    {
+        std::cout << "Enter a text to see whether it has valid parenthesis (2000 characters at max) or type \"cancel\" to go back to the menu without memory leaks.\n";
+        std::cin >> input;
+        std::cout << "\n";
+        
+        if (!std::strcmp(input, "cancel"))
+            break;
+
+        bool isValid = Algorithms::ValidParenthesis(input);
+        std::cout << "Is the text valid regarding its parenthesis? " << isValid << "\n";
     }
     free(input);
 }

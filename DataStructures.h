@@ -7,7 +7,8 @@ public:
 	public:
 		SingleLinkedListNode(int value)
 		{
-			this[0].value = value;
+			this->value = value;
+			this->next = NULL;
 		}
 
 		SingleLinkedListNode* next;

@@ -105,22 +105,22 @@ public:
 		/*
 			Queue for knowing which closing should go unless an new parenthesis opens.
 		*/
-		auto closingQueue = DataStructures::SingleLinkedListNode(0);
+		DataStructures::SingleLinkedListNode* closingQueue = new DataStructures::SingleLinkedListNode(0);
 
 		for (size_t i = 0; i < (currentC = input[i]) != '\000'; i++)
 		{
 			if (currentC == '(' || currentC == '[' || currentC == '{')
 			{
-				auto new_node = DataStructures::SingleLinkedListNode((int)currentC);
-				new_node.next = &closingQueue;
+				DataStructures::SingleLinkedListNode* new_node = new DataStructures::SingleLinkedListNode((int)currentC);
+				new_node->next = closingQueue;
 				closingQueue = new_node;
 			}
 			if (currentC == ')' || currentC == ']' || currentC == '}')
 			{
 				char openingEquivalent = currentC - (2 * (currentC == ']' || currentC == '}')) - (currentC == ')');
-				if (closingQueue.value == openingEquivalent)
+				if (closingQueue[0].value == openingEquivalent)
 				{
-					closingQueue = *closingQueue.next;
+					closingQueue = closingQueue->next;
 				}
 				else
 				{
@@ -130,7 +130,16 @@ public:
 			}
 		}
 
+		output = output && closingQueue->value == 0;
+
 		// Free memory
+		auto previousNode = closingQueue;
+		while (previousNode)
+		{
+			auto currentNode = previousNode->next;
+			free(previousNode);
+			previousNode = currentNode;
+		}
 		for (size_t i = 0; i < input_length; i++)
 		{
 			free(parenthesisPositions[i][0]);
