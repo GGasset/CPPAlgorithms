@@ -1,7 +1,9 @@
 #include <string>
 
+#include "DataStructures.h"
+
 #pragma once
-class Algorithms
+static class Algorithms
 {
 public:
 	static int atoi(char* input)
@@ -50,26 +52,94 @@ public:
 
 	static bool ValidParenthesis(char* input)
 	{
-		int input_length = 0;
+		size_t parenthesisTypesCount = 3;
+		size_t input_length = 0;
 		for (int i = 0; input[i] != '\000'; i++, input_length++) {  }
 
 		/*
 			Parenthesis positions:
-				int*** (length = input_length)
-					int** (length = 2):
-						int* (length = 3):
-							'(' at index 0
-							'[' at index 1
-							'{' at index 2
+				bool*** (length = input_length)
+					bool** (length = 2):
+						bool* (length = 3):
+							'(' at index 0, 1 if present, 0 otherwise
+							'[' at index 1, 1 if present, 0 otherwise
+							'{' at index 2, 1 if present, 0 otherwise
 
-						int* (length = 3): 
-							')' at index 0
-							']' at index 1
-							'}' at index 2
+						bool* (length = 3): 
+							')' at index 0, 1 if present, 0 otherwise
+							']' at index 1, 1 if present, 0 otherwise
+							'}' at index 2, 1 if present, 0 otherwise
 		*/
-		int*** parenthesisPositions = (int***)malloc(sizeof(int**) * input_length);
+		_Notnull_ bool*** parenthesisPositions = (bool***)malloc(sizeof(bool**) * input_length);
+		if (!parenthesisPositions)
+			throw std::exception("Not enough memory");
+
+		for (size_t i = 0; i < input_length; i++)
+		{
+			parenthesisPositions[i] = (bool**)malloc(sizeof(bool*) * 2);
+			if (!parenthesisPositions[i])
+				throw new std::exception("Not enough memory");
+
+			parenthesisPositions[i][0] = (bool*)malloc(sizeof(bool) * parenthesisTypesCount);
+			parenthesisPositions[i][1] = (bool*)malloc(sizeof(bool) * parenthesisTypesCount);
+			if (!parenthesisPositions[i][0] || !parenthesisPositions[i][1])
+				throw std::exception("Not enough memory");
+		}
 
 
+		// Gather data
+		char currentC;
+		for (size_t i = 0; i < (currentC = input[i]) != '\000'; i++)
+		{
+			parenthesisPositions[i][0][0] = currentC == '(';
+			parenthesisPositions[i][0][1] = currentC == '[';
+			parenthesisPositions[i][0][2] = currentC == '{';
+
+			parenthesisPositions[i][1][0] = currentC == ')';
+			parenthesisPositions[i][1][1] = currentC == ']';
+			parenthesisPositions[i][1][2] = currentC == '}';
+		}
+
+		// Process data
+		bool output = true;
+		/*
+			Queue for knowing which closing should go unless an new parenthesis opens.
+		*/
+		auto closingQueue = DataStructures::SingleLinkedListNode(0);
+
+		for (size_t i = 0; i < (currentC = input[i]) != '\000'; i++)
+		{
+			if (currentC == '(' || currentC == '[' || currentC == '{')
+			{
+				auto new_node = DataStructures::SingleLinkedListNode((int)currentC);
+				new_node.next = &closingQueue;
+				closingQueue = new_node;
+			}
+			if (currentC == ')' || currentC == ']' || currentC == '}')
+			{
+				char openingEquivalent = currentC - (2 * (currentC == ']' || currentC == '}')) - (currentC == ')');
+				if (closingQueue.value == openingEquivalent)
+				{
+					closingQueue = *closingQueue.next;
+				}
+				else
+				{
+					output = false;
+					break;
+				}
+			}
+		}
+
+		// Free memory
+		for (size_t i = 0; i < input_length; i++)
+		{
+			free(parenthesisPositions[i][0]);
+			free(parenthesisPositions[i][1]);
+			free(parenthesisPositions[i]);
+		}
+		free(parenthesisPositions);
+
+		return output;
 	}
 };
 

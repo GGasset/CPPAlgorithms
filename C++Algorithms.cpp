@@ -38,7 +38,7 @@ void stringToInteger()
             std::string integerResult = std::to_string(Algorithms::atoi(input));
             std::cout << "Parsed number: " + integerResult + "\n";
         }
-        catch (const std::string& err)
+        catch (const std::string&)
         {
             std::cout << "Error while parsing the number";
         }
