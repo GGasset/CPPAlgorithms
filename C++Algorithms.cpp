@@ -82,7 +82,7 @@ void changeBase()
     {
         try
         {
-            std::cout << "Enter \"cancel\" at any moment to stop the program";
+            std::cout << "Enter \"cancel\" at any moment to stop the program\n";
             std::cout << "Enter the base 10 number: ";
             std::cin >> base10;
             std::cout << "\n";
