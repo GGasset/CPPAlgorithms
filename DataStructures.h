@@ -13,6 +13,15 @@ public:
 
 		SingleLinkedListNode* next;
 		int value;
+
+		SingleLinkedListNode* GetLastNode()
+		{
+			if (this->next == NULL)
+			{
+				return this;
+			}
+			return this->next->GetLastNode();
+		}
 	};
 };
 
