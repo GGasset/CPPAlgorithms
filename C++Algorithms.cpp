@@ -15,6 +15,7 @@ int main()
     menu += "\"valid_parenthesis\"";
     while (true)
     {
+
         std::cout << menu << "\n";
         std::cin >> input;
         if (!std::strcmp(input, "cancel"))
@@ -56,7 +57,7 @@ void validParenthesis()
     char* input = (char*)malloc(sizeof(char) * 2000);
     while (true)
     {
-        std::cout << "Enter a text to see whether it has valid parenthesis (2000 characters at max) or type \"cancel\" to go back to the menu without memory leaks.\n";
+        std::cout << "Enter a text to see whether it has valid parenthesis (2000 characters at max) or enter \"cancel\" to go back to the menu without memory leaks.\n";
         std::cin >> input;
         std::cout << "\n";
         
@@ -67,6 +68,41 @@ void validParenthesis()
         std::cout << "Is the text valid regarding its parenthesis? " << isValid << "\n";
     }
     free(input);
+}
+
+void changeBase(int number, int base)
+{
+    char* base10 = (char*)malloc(sizeof(char) * 200);
+    char* newBase = (char*)malloc(sizeof(char) * 200);
+    while (true)
+    {
+        try
+        {
+            std::cout << "Enter \"cancel\" at any moment to stop the program";
+            std::cout << "Enter the base 10 number: ";
+            std::cin >> base10;
+            std::cout << "\n";
+
+            if (!std::strcmp(base10, "cancel"))
+                break;
+
+            std::cout << "Enter the new base: ";
+            std::cin >> newBase;
+            std::cout << "\n";
+
+            if (!std::strcmp(base10, "cancel"))
+                break;
+
+            std::cout << Algorithms::changeBase(Algorithms::atoi(base10), Algorithms::atoi(newBase)) << "\n";
+        }
+        catch (const std::string& err)
+        {
+            std::cout << err << "\n";
+        }
+    }
+
+    free(base10);
+    free(newBase);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -8,7 +8,7 @@ public:
 		SingleLinkedListNode(int value)
 		{
 			this->value = value;
-			this->next = NULL;
+			this->next = 0;
 		}
 
 		SingleLinkedListNode* next;
@@ -16,7 +16,7 @@ public:
 
 		SingleLinkedListNode* GetLastNode()
 		{
-			if (this->next == NULL)
+			if (this->next == 0)
 			{
 				return this;
 			}

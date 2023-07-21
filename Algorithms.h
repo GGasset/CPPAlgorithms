@@ -100,5 +100,58 @@ public:
 
 		return output;
 	}
+
+	/// <summary>
+	/// Changes base from base 10
+	/// </summary>
+	/// <param name="number"></param>
+	/// <param name="base"></param>
+	/// <returns></returns>
+	static std::string changeBase(int number, int base)
+	{
+		if (base <= 0)
+		{	
+			throw "bases less or equal than 0 arent possible";
+		}
+		if (base > 9)
+		{
+			throw "bases greater than base 9 aren't implemented";
+		}
+
+		int current_division_output = number;
+		DataStructures::SingleLinkedListNode *remainders = new DataStructures::SingleLinkedListNode(current_division_output % base);
+		current_division_output /= base;
+		do
+		{
+			int remainder = current_division_output % base;
+			current_division_output /= base;
+
+			remainders->GetLastNode()->next = new DataStructures::SingleLinkedListNode(remainder);
+		} while (current_division_output);
+
+		std::string output = "";
+		while (remainders)
+		{
+			output = getNumberAsSingleDigit(remainders->value) + output;
+			
+			DataStructures::SingleLinkedListNode *currentNode = remainders;
+			remainders = remainders->next;
+			free(currentNode);
+		}
+	}
+
+
+private:
+	/// <summary>
+	/// Returns a letter or a parenthesis with numbers and/or letters if the number is greater than 33 instead of a number greater than 9 for higher bases or else the number itself
+	/// </summary>
+	/// <param name="number"></param>
+	/// <returns></returns>
+	static std::string getNumberAsSingleDigit(int number)
+	{
+		return std::to_string(number);
+	}
+
+public:
 };
 
