@@ -56,51 +56,8 @@ public:
 		size_t input_length = 0;
 		for (int i = 0; input[i] != '\000'; i++, input_length++) {  }
 
-		/*
-			Parenthesis positions:
-				bool*** (length = input_length)
-					bool** (length = 2):
-						bool* (length = 3):
-							'(' at index 0, 1 if present, 0 otherwise
-							'[' at index 1, 1 if present, 0 otherwise
-							'{' at index 2, 1 if present, 0 otherwise
-
-						bool* (length = 3): 
-							')' at index 0, 1 if present, 0 otherwise
-							']' at index 1, 1 if present, 0 otherwise
-							'}' at index 2, 1 if present, 0 otherwise
-		*/
-		_Notnull_ bool*** parenthesisPositions = (bool***)malloc(sizeof(bool**) * input_length);
-		if (!parenthesisPositions)
-			throw std::exception("Not enough memory");
-
-		for (size_t i = 0; i < input_length; i++)
-		{
-			parenthesisPositions[i] = (bool**)malloc(sizeof(bool*) * 2);
-			if (!parenthesisPositions[i])
-				throw new std::exception("Not enough memory");
-
-			parenthesisPositions[i][0] = (bool*)malloc(sizeof(bool) * parenthesisTypesCount);
-			parenthesisPositions[i][1] = (bool*)malloc(sizeof(bool) * parenthesisTypesCount);
-			if (!parenthesisPositions[i][0] || !parenthesisPositions[i][1])
-				throw std::exception("Not enough memory");
-		}
-
-
-		// Gather data
-		char currentC;
-		for (size_t i = 0; i < (currentC = input[i]) != '\000'; i++)
-		{
-			parenthesisPositions[i][0][0] = currentC == '(';
-			parenthesisPositions[i][0][1] = currentC == '[';
-			parenthesisPositions[i][0][2] = currentC == '{';
-
-			parenthesisPositions[i][1][0] = currentC == ')';
-			parenthesisPositions[i][1][1] = currentC == ']';
-			parenthesisPositions[i][1][2] = currentC == '}';
-		}
-
 		// Process data
+		char currentC;
 		bool output = true;
 		/*
 			Queue for knowing which closing should go unless an new parenthesis opens.
@@ -140,13 +97,6 @@ public:
 			free(previousNode);
 			previousNode = currentNode;
 		}
-		for (size_t i = 0; i < input_length; i++)
-		{
-			free(parenthesisPositions[i][0]);
-			free(parenthesisPositions[i][1]);
-			free(parenthesisPositions[i]);
-		}
-		free(parenthesisPositions);
 
 		return output;
 	}
