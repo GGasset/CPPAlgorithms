@@ -1,3 +1,6 @@
+#include <iostream>
+#include <string>
+
 #pragma once
 static class DataStructures
 {
@@ -21,6 +24,19 @@ public:
 				return this;
 			}
 			return this->next->GetLastNode();
+		}
+
+		SingleLinkedListNode* GetSecondToLastNode()
+		{
+			if (this->next == 0)
+			{
+				return this;
+			}
+			if (this->next->next == 0)
+			{
+				return this;
+			}
+			return GetSecondToLastNode();
 		}
 	};
 };
