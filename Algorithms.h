@@ -134,10 +134,10 @@ public:
 
 		std::string output = std::string();
 
-		DataStructures::SingleLinkedListNode* currentNode = remainders;
-		for (int j = 0; j < i; j++, currentNode = currentNode->next)
+		DataStructures::SingleLinkedListNode* current_remainder = remainders;
+		for (int j = 0; j < i; j++, current_remainder = current_remainder->next)
 		{
-			output = getNumberAsSingleDigit(currentNode->value) + output;
+			output = getNumberAsSingleDigit(current_remainder->value) + output;
 		}
 		
 		remainders->free();
