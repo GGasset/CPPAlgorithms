@@ -38,6 +38,16 @@ public:
 			}
 			return GetSecondToLastNode();
 		}
+
+		void free()
+		{
+			if (this->next == 0)
+			{
+				std::free(this);
+				return;
+			}
+			this->next->free();
+		}
 	};
 };
 

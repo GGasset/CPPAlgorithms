@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 
 #include "DataStructures.h"
@@ -121,23 +122,36 @@ public:
 		int current_division_output = number;
 		DataStructures::SingleLinkedListNode *remainders = new DataStructures::SingleLinkedListNode(current_division_output % base);
 		current_division_output /= base;
+		int i = 1;
 		do
 		{
 			int remainder = current_division_output % base;
+			remainders->GetLastNode()->next = new DataStructures::SingleLinkedListNode(remainder);
 			current_division_output /= base;
 
-			remainders->GetLastNode()->next = new DataStructures::SingleLinkedListNode(remainder);
+			i++;
 		} while (current_division_output);
 
-		std::string output = "";
-		while (remainders)
+		std::string output = std::string();
+
+		DataStructures::SingleLinkedListNode* currentNode = remainders;
+		for (int j = 0; j < i; j++, currentNode = currentNode->next)
 		{
-			output = getNumberAsSingleDigit(remainders->value) + output;
-			
-			DataStructures::SingleLinkedListNode *currentNode = remainders;
-			remainders = remainders->next;
-			free(currentNode);
+			output += getNumberAsSingleDigit(currentNode->value);
 		}
+
+		/*{
+			/*output = getNumberAsSingleDigit(remainders->GetLastNode()->value) + output;
+			std::cout << output << "\n";
+			DataStructures::SingleLinkedListNode* lastNode = remainders->GetLastNode();
+			DataStructures::SingleLinkedListNode* secondToLastNode = remainders->GetSecondToLastNode();
+			secondToLastNode->next = 0;
+			free(lastNode);*
+			i--;
+		} while (i > 0)*/
+		
+		remainders->free();
+		return output;
 	}
 
 

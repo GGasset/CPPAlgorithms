@@ -97,7 +97,10 @@ void changeBase()
             if (!std::strcmp(base10, "cancel"))
                 break;
 
-            std::cout << Algorithms::changeBase(Algorithms::atoi(base10), Algorithms::atoi(newBase)) << "\n";
+            int base10_number = Algorithms::atoi(base10);
+            int parsed_new_base = Algorithms::atoi(newBase);
+            std::string new_number = Algorithms::changeBase(base10_number, parsed_new_base) + "\n";
+            std::cout << new_number;
         }
         catch (const std::string& err)
         {
