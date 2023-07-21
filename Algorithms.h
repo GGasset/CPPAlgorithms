@@ -139,16 +139,6 @@ public:
 		{
 			output += getNumberAsSingleDigit(currentNode->value);
 		}
-
-		/*{
-			/*output = getNumberAsSingleDigit(remainders->GetLastNode()->value) + output;
-			std::cout << output << "\n";
-			DataStructures::SingleLinkedListNode* lastNode = remainders->GetLastNode();
-			DataStructures::SingleLinkedListNode* secondToLastNode = remainders->GetSecondToLastNode();
-			secondToLastNode->next = 0;
-			free(lastNode);*
-			i--;
-		} while (i > 0)*/
 		
 		remainders->free();
 		return output;
