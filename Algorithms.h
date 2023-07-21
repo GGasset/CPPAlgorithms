@@ -112,11 +112,11 @@ public:
 	{
 		if (base <= 0)
 		{	
-			throw "bases less or equal than 0 arent possible";
+			throw std::string("bases less or equal than 0 arent possible");
 		}
 		if (base > 9)
 		{
-			throw "bases greater than base 9 aren't implemented";
+			throw std::string("bases greater than base 9 aren't implemented");
 		}
 
 		int current_division_output = number;
@@ -137,7 +137,7 @@ public:
 		DataStructures::SingleLinkedListNode* currentNode = remainders;
 		for (int j = 0; j < i; j++, currentNode = currentNode->next)
 		{
-			output += getNumberAsSingleDigit(currentNode->value);
+			output = getNumberAsSingleDigit(currentNode->value) + output;
 		}
 		
 		remainders->free();

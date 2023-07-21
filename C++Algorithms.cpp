@@ -102,7 +102,7 @@ void changeBase()
             std::string new_number = Algorithms::changeBase(base10_number, parsed_new_base) + "\n";
             std::cout << new_number;
         }
-        catch (const std::string& err)
+        catch (const std::string*& err)
         {
             std::cout << err << "\n";
         }
