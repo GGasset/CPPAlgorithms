@@ -6,13 +6,15 @@
 
 void stringToInteger();
 void validParenthesis();
+void changeBase();
 
 
 int main()
 {
     char* input = (char*)malloc(sizeof(char) * 100);
     std::string menu = "Enter a command mentioned below to execute a home-made program\n\"cancel\" to exit the program\n\"atoi\" basically a string to integer\n";
-    menu += "\"valid_parenthesis\"";
+    menu += "\"valid_parenthesis\"\n";
+    menu += "\"change_base\" changes from base 10 to any base";
     while (true)
     {
 
@@ -24,6 +26,8 @@ int main()
             stringToInteger();
         if (!std::strcmp(input, "valid_parenthesis"))
             validParenthesis();
+        if (!std::strcmp(input, "change_base"))
+            changeBase();
     }
     free(input);
 }
@@ -70,7 +74,7 @@ void validParenthesis()
     free(input);
 }
 
-void changeBase(int number, int base)
+void changeBase()
 {
     char* base10 = (char*)malloc(sizeof(char) * 200);
     char* newBase = (char*)malloc(sizeof(char) * 200);
