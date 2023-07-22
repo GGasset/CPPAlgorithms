@@ -150,7 +150,7 @@ private:
 	/// <returns></returns>
 	static std::string getNumberAsSingleDigit(int number)
 	{
-		int max_single_digit_number = 'z' - 'a' + 9;
+		int max_single_digit_number = 'z' - 'a' + 9 + 2;
 		if (number > 9 && number < max_single_digit_number)
 		{
 			char* output = (char*)malloc(sizeof(char) * 2);
@@ -160,10 +160,10 @@ private:
 			free(output);
 			return string_equivalent;
 		}
-		if (number > max_single_digit_number)
+		if (number >= max_single_digit_number)
 		{
 			std::string output = "(";
-			output += changeBase(number, max_single_digit_number - 1) + ")";
+			output += changeBase(number, max_single_digit_number) + ")";
 			return output;
 		}
 		return std::to_string(number);
