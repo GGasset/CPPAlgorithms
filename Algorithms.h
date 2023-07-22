@@ -157,7 +157,7 @@ private:
 		if (number > 9)
 		{
 			char* output = (char*)malloc(sizeof(char) * 2);
-			output[0] = (number - 9) + 'a' - 1;
+			output[0] = (number - 9) + 'A' - 1;
 			output[1] = '\000';
 			std::string string_equivalent(output);
 			free(output);
