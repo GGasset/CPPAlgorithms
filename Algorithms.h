@@ -114,10 +114,6 @@ public:
 		{	
 			throw std::string("bases less or equal than 0 aren't possible");
 		}
-		if (base > ('z' - 'a') + 9)
-		{
-			throw std::string("bases greater than base z + 9 aren't implemented");
-		}
 
 		int current_division_output = number;
 		DataStructures::SingleLinkedListNode *remainders = new DataStructures::SingleLinkedListNode(current_division_output % base);
@@ -154,7 +150,8 @@ private:
 	/// <returns></returns>
 	static std::string getNumberAsSingleDigit(int number)
 	{
-		if (number > 9)
+		int max_single_digit_number = 'z' - 'a' + 9;
+		if (number > 9 && number < max_single_digit_number)
 		{
 			char* output = (char*)malloc(sizeof(char) * 2);
 			output[0] = (number - 9) + 'A' - 1;
@@ -162,6 +159,12 @@ private:
 			std::string string_equivalent(output);
 			free(output);
 			return string_equivalent;
+		}
+		if (number > max_single_digit_number)
+		{
+			std::string output = "(";
+			output += changeBase(number, max_single_digit_number - 1) + ")";
+			return output;
 		}
 		return std::to_string(number);
 	}
