@@ -27,7 +27,7 @@ int main()
         if (!std::strcmp(input, "valid_parenthesis"))
             validParenthesis();
         if (!std::strcmp(input, "change_base"))
-            changeBase();
+            changeBase10();
     }
     free(input);
 }
