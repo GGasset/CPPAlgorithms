@@ -112,32 +112,33 @@ public:
 	{
 		if (base <= 0)
 		{	
-			throw std::string("bases less or equal than 0 arent possible");
+			throw std::string("bases less or equal than 0 aren't possible");
 		}
-		if (base > 9)
+		if (base > ('z' - 'a') + 9)
 		{
-			throw std::string("bases greater than base 9 aren't implemented");
+			throw std::string("bases greater than base z + 9 aren't implemented");
 		}
 
 		int current_division_output = number;
 		DataStructures::SingleLinkedListNode *remainders = new DataStructures::SingleLinkedListNode(current_division_output % base);
 		current_division_output /= base;
 		int i = 1;
-		do
+		while (current_division_output)
 		{
 			int remainder = current_division_output % base;
 			remainders->GetLastNode()->next = new DataStructures::SingleLinkedListNode(remainder);
 			current_division_output /= base;
 
 			i++;
-		} while (current_division_output);
+		};
 
 		std::string output = std::string();
 
 		DataStructures::SingleLinkedListNode* current_remainder = remainders;
 		for (int j = 0; j < i; j++, current_remainder = current_remainder->next)
 		{
-			output = getNumberAsSingleDigit(current_remainder->value) + output;
+			std::string digit = getNumberAsSingleDigit(current_remainder->value);
+			output = digit + output;
 		}
 		
 		remainders->free();
@@ -153,6 +154,15 @@ private:
 	/// <returns></returns>
 	static std::string getNumberAsSingleDigit(int number)
 	{
+		if (number > 9)
+		{
+			char* output = (char*)malloc(sizeof(char) * 2);
+			output[0] = (number - 9) + 'a' - 1;
+			output[1] = '\000';
+			std::string string_equivalent(output);
+			free(output);
+			return string_equivalent;
+		}
 		return std::to_string(number);
 	}
 
