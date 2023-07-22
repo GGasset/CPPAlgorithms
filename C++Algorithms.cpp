@@ -19,7 +19,8 @@ int main()
     {
 
         std::cout << menu << "\n";
-        std::cin >> input;
+        std::cin.ignore();
+        std::cin.getline(input, sizeof(char) * 100);
         if (!std::strcmp(input, "cancel"))
             break;
         if (!std::strcmp(input, "atoi"))
@@ -38,7 +39,8 @@ void stringToInteger()
     while (true)
     {
         std::cout << "Enter a number or type \"cancel\" to go back to the menu without memory leaks\n";
-        _Notnull_ std::cin >> input;
+        std::cin.ignore();
+        _Notnull_ std::cin.getline(input, sizeof(input));
         std::cout << "\n";
         if (!std::strcmp(input, "cancel"))
             break;
@@ -62,7 +64,8 @@ void validParenthesis()
     while (true)
     {
         std::cout << "Enter a text to see whether it has valid parenthesis (2000 characters at max) or enter \"cancel\" to go back to the menu without memory leaks.\nThe text musn't contain any whitespaces\n";
-        std::cin >> input;
+        std::cin.ignore();
+        _Notnull_ std::cin.getline(input, sizeof(char) * 2000);
         std::cout << "\n";
         
         if (!std::strcmp(input, "cancel"))
@@ -84,14 +87,16 @@ void changeBase()
         {
             std::cout << "Enter \"cancel\" at any moment to stop the program\n";
             std::cout << "Enter the base 10 number: ";
-            std::cin >> base10;
+            std::cin.ignore();
+            _Notnull_ std::cin.getline(base10, sizeof(char) * 200);
             std::cout << "\n";
 
             if (!std::strcmp(base10, "cancel"))
                 break;
 
             std::cout << "Enter the new base: ";
-            std::cin >> newBase;
+            std::cin.ignore();
+            _Notnull_ std::cin.getline(newBase, sizeof(char) * 200);
             std::cout << "\n";
 
             if (!std::strcmp(base10, "cancel"))
