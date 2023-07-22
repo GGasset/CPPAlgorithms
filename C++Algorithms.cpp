@@ -6,7 +6,7 @@
 
 void stringToInteger();
 void validParenthesis();
-void changeBase();
+void changeBase10();
 
 
 int main()
@@ -74,7 +74,7 @@ void validParenthesis()
     free(input);
 }
 
-void changeBase()
+void changeBase10()
 {
     char* base10 = (char*)malloc(sizeof(char) * 200);
     char* newBase = (char*)malloc(sizeof(char) * 200);
