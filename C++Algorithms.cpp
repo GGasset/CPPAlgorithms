@@ -14,7 +14,8 @@ int main()
     char* input = (char*)malloc(sizeof(char) * 100);
     std::string menu = "Enter a command mentioned below to execute a home-made program\n\"cancel\" to exit the program\n\"atoi\" basically a string to integer\n";
     menu += "\"valid_parenthesis\"\n";
-    menu += "\"change_base\" changes from base 10 to any base";
+    menu += "\"change_base\" changes from base 10 to any base\n";
+    menu += "\"to base 10\" changes a number from any base to base 10\n";
     while (true)
     {
 
