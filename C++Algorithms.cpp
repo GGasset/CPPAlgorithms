@@ -61,7 +61,7 @@ void validParenthesis()
     char* input = (char*)malloc(sizeof(char) * 2000);
     while (true)
     {
-        std::cout << "Enter a text to see whether it has valid parenthesis (2000 characters at max) or enter \"cancel\" to go back to the menu without memory leaks.\nThe text musn't contain any whitespaces\n";
+        std::cout << "Enter a text to see whether it has valid parenthesis (2000 characters at max) or enter \"cancel\" to go back to the menu without memory leaks.";
         _Notnull_ std::cin.getline(input, sizeof(char) * 2000);
         std::cout << "\n";
         
