@@ -170,5 +170,28 @@ private:
 	}
 
 public:
+	static int toBase10(char* number, size_t number_base)
+	{
+		if (!ValidParenthesis(number))
+		{
+			std::cout << "Invalid parenthesis" << "\n";
+			return -1;
+		}
+		if (number[0] == '\000')
+		{
+			std::cout << "Empty input" << "\n";
+			return -1;
+		}
+		
+		int i = 0;
+		bool is_negative = number[0] == '-';
+		i += number[0] == '-';
+
+		char currentC;
+		while ((currentC = number[i]) != '\000')
+		{
+
+		}
+	}
 };
 
