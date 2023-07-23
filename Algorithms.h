@@ -150,7 +150,8 @@ private:
 	/// <returns></returns>
 	static std::string getNumberAsSingleDigit(int number)
 	{
-		int max_single_digit_number = 'z' - 'a' + 9 + 2;
+		// +10 instead of +9 and + 1 due to 0 counting both on decimal base and on ASCII table
+		int max_single_digit_number = 'z' - 'a' + 1 + 10;
 		if (number > 9 && number < max_single_digit_number)
 		{
 			char* output = (char*)malloc(sizeof(char) * 2);
