@@ -164,7 +164,7 @@ private:
 			return string_equivalent;
 		}
 			else
-				throw "Not enough memory";
+				throw std::string("Not enough memory");
 		}
 		if (number >= max_single_digit_number)
 		{
