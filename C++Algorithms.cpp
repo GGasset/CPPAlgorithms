@@ -8,6 +8,7 @@ void stringToInteger();
 void validParenthesis();
 void changeBase10();
 void toBase10();
+void ReverseLinkedList();
 
 
 int main()
