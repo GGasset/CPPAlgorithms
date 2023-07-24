@@ -148,6 +148,27 @@ void toBase10()
     free(number_base);
 }
 
+void ReverseLinkedList()
+{
+    char* numbers = (char*)malloc(sizeof(char) * 200);
+    while (true)
+    {
+        std::cout << "Enter numbers separated by a space to reverse a singly linked list containing them" << "\n" << "Numbers: ";
+        std::cin.getline(numbers, sizeof(char) * 200);
+
+        char currentC;
+        for (size_t i = 0; (currentC = numbers[i]); i++)
+        {
+            size_t number_length = 0;
+            for (size_t j = i; numbers[j] != ' ' && numbers; j++, number_length++) {  }
+            number_length -= number_length != 0;
+
+
+        }
+    }
+    free(numbers);
+}
+
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
 
