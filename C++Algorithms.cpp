@@ -163,10 +163,10 @@ void ReverseLinkedList()
 
         char currentC;
         DataStructures::SinglyLinkedListNode* toReverse = 0;
-        for (size_t i = 0; (currentC = numbers[i]); i++)
+        for (size_t i = 0; (currentC = numbers[i]) != '\000'; i++)
         {
             size_t number_length = 0;
-            for (size_t j = i; numbers[j] != ' ' && numbers; j++, number_length++) {  }
+            for (size_t j = i; numbers[j] != ' ' && numbers[j] != '\000'; j++, number_length++) {}
             if (!number_length)
                 continue;
 
@@ -181,9 +181,9 @@ void ReverseLinkedList()
             }
             number[number_length] = '\000';
             
-            if (numbers[i + 1])
-                // Skip white space
-                i++;
+            /*if (numbers[i + 1])
+                // Go to whitespace so in the next iteration white space will be skipped
+                i++;*/
 
             int parsedNumber = Algorithms::atoi(number);
 
