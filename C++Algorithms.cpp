@@ -126,8 +126,14 @@ void toBase10()
         std::cout << "Enter a number in any base." << "\n" << "Number: ";
         std::cin.getline(number, sizeof(char) * 30);
 
+        if (!std::strcmp(number, "cancel"))
+            break;
+
         std::cout << "\n\n" << "Enter the base of the number you entered." << "\n" << "Base: ";
         std::cin.getline(number_base, sizeof(char) * 30);
+
+        if (!std::strcmp(number_base, "cancel"))
+            break;
 
         std::cout << "\n\n" << std::to_string(Algorithms::toBase10(number, Algorithms::atoi(number_base))) << "\n\n";
     }
