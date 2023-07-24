@@ -60,6 +60,13 @@ public:
 			return new_first_node;
 		}
 
+		std::string ToString()
+		{
+			if (!this->next)
+				return std::to_string(this->value);
+			return std::to_string(this->value) + "  ->  " + this->next->ToString();
+		}
+
 		void free()
 		{
 			if (this->next == 0)
