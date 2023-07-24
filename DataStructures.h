@@ -19,7 +19,7 @@ public:
 
 		SingleLinkedListNode* GetLastNode()
 		{
-			if (this->next == 0)
+			if (!this->next)
 			{
 				return this;
 			}
@@ -28,11 +28,11 @@ public:
 
 		SingleLinkedListNode* GetSecondToLastNode()
 		{
-			if (this->next == 0)
+			if (!this->next)
 			{
 				return this;
 			}
-			if (this->next->next == 0)
+			if (!this->next->next)
 			{
 				return this;
 			}
