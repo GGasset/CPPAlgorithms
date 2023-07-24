@@ -169,8 +169,6 @@ void ReverseLinkedList()
             for (size_t j = i; numbers[j] != ' ' && numbers; j++, number_length++) {  }
             if (!number_length)
                 continue;
-            number_length--;
-            //number_length -= number_length != 0;
 
             char* number = (char*)malloc(sizeof(char) * number_length + 1);
             if (!number)
@@ -178,7 +176,7 @@ void ReverseLinkedList()
 
             for (size_t j = 0; j < number_length; j++, i++)
             {
-                currentC = number[i];
+                currentC = numbers[i];
                 number[j] = currentC;
             }
             number[number_length] = '\000';
@@ -200,6 +198,8 @@ void ReverseLinkedList()
         std::cout << toReverse->ToString() << "\n";
 
         toReverse->free();
+
+        std::cout << "\n\n";
     }
     free(numbers);
 }
