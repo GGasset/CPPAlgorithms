@@ -17,6 +17,7 @@ int main()
     menu += "\"valid_parenthesis\"\n";
     menu += "\"change_base\" changes from base 10 to any base\n";
     menu += "\"to base 10\" changes a number from any base to base 10\n";
+    menu += "\"reverse linked list\" to reverse a input list of numbers";
     while (true)
     {
 
@@ -32,6 +33,8 @@ int main()
             changeBase10();
         if (!std::strcmp(input, "to base 10"))
             toBase10();
+        if (!std::strcmp(input, "reverse linked list"))
+            ReverseLinkedList();
     }
     free(input);
 }
