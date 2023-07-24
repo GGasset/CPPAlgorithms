@@ -155,14 +155,18 @@ void ReverseLinkedList()
     {
         std::cout << "Enter numbers separated by a space to reverse a singly linked list containing them" << "\n" << "Numbers: ";
         std::cin.getline(numbers, sizeof(char) * 200);
+        std::cout << "\n\n";
 
         char currentC;
-        //DataStructures::SinglyLinkedListNode
+        DataStructures::SinglyLinkedListNode* toReverse = 0;
         for (size_t i = 0; (currentC = numbers[i]); i++)
         {
             size_t number_length = 0;
             for (size_t j = i; numbers[j] != ' ' && numbers; j++, number_length++) {  }
-            number_length -= number_length != 0;
+            if (!number_length)
+                continue;
+            number_length--;
+            //number_length -= number_length != 0;
 
             char* number = (char*)malloc(sizeof(char) * number_length + 1);
             if (!number)
@@ -174,7 +178,24 @@ void ReverseLinkedList()
                 number[j] = currentC;
             }
             number[number_length] = '\000';
+            
+            if (numbers[i + 1])
+                // Skip white space
+                i++;
+
+            int parsedNumber = Algorithms::atoi(number);
+
+            if (!toReverse)
+            {
+                toReverse = new DataStructures::SinglyLinkedListNode(parsedNumber);
+                continue;
+            }
+            toReverse->GetLastNode()->next = new DataStructures::SinglyLinkedListNode(parsedNumber);
         }
+
+        std::cout << toReverse->ToString() << "\n";
+
+        toReverse->free();
     }
     free(numbers);
 }
