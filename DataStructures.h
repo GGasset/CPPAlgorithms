@@ -53,7 +53,7 @@ public:
 
 			if (!this->next)
 			{
-				return;
+				return output;
 			}
 			SinglyLinkedListNode* new_first_node = this->next->Reverse(firstNode);
 			new_first_node->next = new_first_node;
