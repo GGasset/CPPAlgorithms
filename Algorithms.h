@@ -157,12 +157,12 @@ private:
 			char* output = (char*)malloc(sizeof(char) * 2);
 			if (output)
 			{
-			output[0] = (number - 9) + 'A' - 1;
-			output[1] = '\000';
-			std::string string_equivalent(output);
-			free(output);
-			return string_equivalent;
-		}
+				output[0] = (number - 9) + 'A' - 1;
+				output[1] = '\000';
+				std::string string_equivalent(output);
+				free(output);
+				return string_equivalent;
+			}
 			else
 				throw std::string("Not enough memory");
 		}
@@ -188,16 +188,72 @@ public:
 			std::cout << "Empty input" << "\n";
 			return -1;
 		}
+
+		int input_length = 0;
+		for (int i = 0; number[i] != '\000'; i++, input_length++) {  }
 		
 		int i = 0;
 		bool is_negative = number[0] == '-';
 		i += number[0] == '-';
 
+		int output = 0;
 		char currentC;
 		while ((currentC = number[i]) != '\000')
 		{
+			char nextC = number[i + 1];
 
+			// To lower
+  			currentC += ('a' - 'A') * (currentC >= 'A' && currentC <= 'Z');
+			nextC += ('a' - 'A') * (currentC >= 'A' && currentC <= 'Z');
+
+			int i_multiplier = (static_cast<unsigned long long>(input_length) - i - 1);
+
+			if (currentC == '(')
+			{
+				// Recurse parenthesis contents toBase10 in base 'z' - 'a' + 10 + 1 and leave i after ')'
+				size_t parenthesis_contents_length = 0;
+				for (int j = i; number[j] != ')'; j++, parenthesis_contents_length++) {  }
+
+				char* parenthesis_contents = (char*)malloc(sizeof(char) * (parenthesis_contents_length + 1));
+				if (!parenthesis_contents)
+					throw std::string("Not enough memory");
+				for (size_t j = 0; (currentC = number[i]) != ')' && j < parenthesis_contents_length; j++, i++)
+				{
+					parenthesis_contents[j] = currentC;
+				}
+				parenthesis_contents[parenthesis_contents_length] = '\000';
+				i++;
+
+				output += toBase10(parenthesis_contents, 'z' - 'a' + 1 + 10);
+
+				i++;
+				
+				continue;
+			}
+			output += getSingleDigitAsNumber(currentC, number_base) * std::pow(number_base, i_multiplier);
+			
+			i++;
 		}
+
+		// Invert the number if necessary
+		output *= -1 + 2 * !is_negative;
+		return output;
+	}
+
+private:
+	static int getSingleDigitAsNumber(char digit, size_t digit_base)
+	{
+		if (digit >= 'a' && digit <= 'z')
+		{
+			return digit - 'a' + 10;
+		}
+		else if (digit < '0' || digit > '9')
+		{
+			throw std::string("Format error");
+		}
+
+		// -1 due to ASCII table starting from 0
+		return digit - '0';
 	}
 };
 

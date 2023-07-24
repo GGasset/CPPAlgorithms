@@ -7,6 +7,7 @@
 void stringToInteger();
 void validParenthesis();
 void changeBase10();
+void toBase10();
 
 
 int main()
@@ -29,6 +30,8 @@ int main()
             validParenthesis();
         if (!std::strcmp(input, "change_base"))
             changeBase10();
+        if (!std::strcmp(input, "to base 10"))
+            toBase10();
     }
     free(input);
 }
@@ -111,6 +114,25 @@ void changeBase10()
 
     free(base10);
     free(newBase);
+}
+
+void toBase10()
+{
+    char* number = (char*)malloc(sizeof(char) * 30);
+    char* number_base = (char*)malloc(sizeof(char) * 30);
+    while (true)
+    {
+        std::cout << "Enter \"cancel\" to change program at any time.\n"
+        std::cout << "Enter a number in any base." << "\n" << "Number: ";
+        std::cin.getline(number, sizeof(char) * 30);
+
+        std::cout << "\n\n" << "Enter the base of the number you entered." << "\n" << "Base: ";
+        std::cin.getline(number_base, sizeof(char) * 30);
+
+        std::cout << "\n\n" << std::to_string(Algorithms::toBase10(number, Algorithms::atoi(number_base))) << "\n\n";
+    }
+    free(number);
+    free(number_base);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
