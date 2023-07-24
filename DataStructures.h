@@ -5,19 +5,19 @@
 static class DataStructures
 {
 public:
-	class SingleLinkedListNode
+	class SinglyLinkedListNode
 	{
 	public:
-		SingleLinkedListNode(int value)
+		SinglyLinkedListNode(int value)
 		{
 			this->value = value;
 			this->next = 0;
 		}
 
-		SingleLinkedListNode* next;
+		SinglyLinkedListNode* next;
 		int value;
 
-		SingleLinkedListNode* GetLastNode()
+		SinglyLinkedListNode* GetLastNode()
 		{
 			if (!this->next)
 			{
@@ -26,7 +26,7 @@ public:
 			return this->next->GetLastNode();
 		}
 
-		SingleLinkedListNode* GetSecondToLastNode()
+		SinglyLinkedListNode* GetSecondToLastNode()
 		{
 			if (!this->next)
 			{
@@ -39,9 +39,9 @@ public:
 			return GetSecondToLastNode();
 		}
 
-		SingleLinkedListNode* Reverse(SingleLinkedListNode* firstNode = NULL)
+		SinglyLinkedListNode* Reverse(SinglyLinkedListNode* firstNode = NULL)
 		{
-			SingleLinkedListNode* output = new SingleLinkedListNode(this->value);
+			SinglyLinkedListNode* output = new SinglyLinkedListNode(this->value);
 
 			if (!firstNode)
 			{
@@ -55,7 +55,7 @@ public:
 			{
 				return;
 			}
-			SingleLinkedListNode* new_first_node = this->next->Reverse(firstNode);
+			SinglyLinkedListNode* new_first_node = this->next->Reverse(firstNode);
 			new_first_node->next = new_first_node;
 			return new_first_node;
 		}

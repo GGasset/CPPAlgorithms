@@ -157,13 +157,23 @@ void ReverseLinkedList()
         std::cin.getline(numbers, sizeof(char) * 200);
 
         char currentC;
+        //DataStructures::SinglyLinkedListNode
         for (size_t i = 0; (currentC = numbers[i]); i++)
         {
             size_t number_length = 0;
             for (size_t j = i; numbers[j] != ' ' && numbers; j++, number_length++) {  }
             number_length -= number_length != 0;
 
+            char* number = (char*)malloc(sizeof(char) * number_length + 1);
+            if (!number)
+                throw std::string("Not enough memory");
 
+            for (size_t j = 0; j < number_length; j++, i++)
+            {
+                currentC = number[i];
+                number[j] = currentC;
+            }
+            number[number_length] = '\000';
         }
     }
     free(numbers);
