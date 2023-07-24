@@ -135,7 +135,14 @@ void toBase10()
         if (!std::strcmp(number_base, "cancel"))
             break;
 
-        std::cout << "\n\n" << std::to_string(Algorithms::toBase10(number, Algorithms::atoi(number_base))) << "\n\n";
+        try
+        {
+            std::cout << "\n\n" << std::to_string(Algorithms::toBase10(number, Algorithms::atoi(number_base))) << "\n\n";
+        }
+        catch (const std::string& err)
+        {
+            std::cout << "\n\n" << err << "\n\n";
+        }
     }
     free(number);
     free(number_base);
