@@ -227,12 +227,21 @@ public:
 				parenthesis_contents[parenthesis_contents_length] = '\000';
 				i++;
 
-				output += toBase10(parenthesis_contents, 'z' - 'a' + 1 + 10);
+				int parenthesis_output = toBase10(parenthesis_contents, 'z' - 'a' + 1 + 10);
+				if (parenthesis_output >= number_base)
+					throw std::string("Digit higher than base.");
+
+				output += parenthesis_output;
 
 				
 				continue;
 			}
-			output += getSingleDigitAsNumber(currentC, number_base) * std::pow(number_base, i_multiplier);
+
+			int digit_as_base_10 = getSingleDigitAsNumber(currentC, number_base) * std::pow(number_base, i_multiplier);
+			if (digit_as_base_10 >= number_base)
+				throw std::string("Digit higher than base.");
+
+			output += digit_as_base_10;
 			
 			i++;
 		}
