@@ -86,7 +86,7 @@ void changeBase10()
     {
         try
         {
-            std::cout << "Enter \"cancel\" at any moment to stop the program\n";
+            std::cout << "Enter \"cancel\" at any moment to change the program\n";
             std::cout << "Enter the base 10 number: ";
             _Notnull_ std::cin.getline(base10, sizeof(char) * 200);
             std::cout << "\n";
@@ -122,7 +122,7 @@ void toBase10()
     char* number_base = (char*)malloc(sizeof(char) * 30);
     while (true)
     {
-        std::cout << "Enter \"cancel\" to change program at any time.\n"
+        std::cout << "Enter \"cancel\" to change program at any time.\n";
         std::cout << "Enter a number in any base." << "\n" << "Number: ";
         std::cin.getline(number, sizeof(char) * 30);
 
