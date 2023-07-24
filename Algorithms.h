@@ -210,6 +210,9 @@ public:
 
 			if (currentC == '(')
 			{
+				// Skip '('
+				i++;
+
 				// Recurse parenthesis contents toBase10 in base 'z' - 'a' + 10 + 1 and leave i after ')'
 				size_t parenthesis_contents_length = 0;
 				for (int j = i; number[j] != ')'; j++, parenthesis_contents_length++) {  }
@@ -226,7 +229,6 @@ public:
 
 				output += toBase10(parenthesis_contents, 'z' - 'a' + 1 + 10);
 
-				i++;
 				
 				continue;
 			}
