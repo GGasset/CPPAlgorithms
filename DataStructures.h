@@ -39,6 +39,27 @@ public:
 			return GetSecondToLastNode();
 		}
 
+		SingleLinkedListNode* Reverse(SingleLinkedListNode* firstNode = NULL)
+		{
+			SingleLinkedListNode* output = new SingleLinkedListNode(this->value);
+
+			if (!firstNode)
+			{
+				firstNode = output;
+				return this->next->Reverse(firstNode);
+			}
+
+
+
+			if (!this->next)
+			{
+				return;
+			}
+			SingleLinkedListNode* new_first_node = this->next->Reverse(firstNode);
+			new_first_node->next = new_first_node;
+			return new_first_node;
+		}
+
 		void free()
 		{
 			if (this->next == 0)
