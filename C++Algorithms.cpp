@@ -157,14 +157,19 @@ void ReverseLinkedList()
     char* numbers = (char*)malloc(sizeof(char) * 200);
     while (true)
     {
-        std::cout << "Enter numbers separated by a space to reverse a singly linked list containing them" << "\n" << "Numbers: ";
+        std::cout << "Enter numbers separated by a space to reverse a singly linked list containing them. Type \"cancel\" to exit to the menu." << "\n" << "Numbers: ";
         std::cin.getline(numbers, sizeof(char) * 200);
         std::cout << "\n\n";
 
+        if (!std::strcmp(numbers, "cancel"))
+            break;
+
         char currentC;
         DataStructures::SinglyLinkedListNode* toReverse = 0;
-        for (size_t i = 0; (currentC = numbers[i]) != '\000'; i++)
+        for (size_t i = 0; (currentC = numbers[i]) != '\000'; i += 0)
         {
+            i += currentC == ' ';
+
             size_t number_length = 0;
             for (size_t j = i; numbers[j] != ' ' && numbers[j] != '\000'; j++, number_length++) {}
             if (!number_length)
@@ -174,16 +179,12 @@ void ReverseLinkedList()
             if (!number)
                 throw std::string("Not enough memory");
 
-            for (size_t j = 0; j < number_length; j++, i++)
+            for (size_t j = 0; j < number_length && numbers[i] != '\000' && numbers[i] != ' '; j++, i++)
             {
                 currentC = numbers[i];
                 number[j] = currentC;
             }
             number[number_length] = '\000';
-            
-            /*if (numbers[i + 1])
-                // Go to whitespace so in the next iteration white space will be skipped
-                i++;*/
 
             int parsedNumber = Algorithms::atoi(number);
 
