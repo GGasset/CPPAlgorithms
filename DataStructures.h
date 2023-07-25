@@ -76,5 +76,33 @@ public:
 			this->next->free();
 		}
 	};
+
+	class HashTableNode
+	{
+	public:
+		HashTableNode* next;
+		int value;
+
+		HashTableNode(int value = 0)
+		{
+			this->next = 0;
+			this->value = value;
+		}
+	};
+
+	class HashTable
+	{
+	private:
+		HashTableNode* nodes;
+
+	public:
+		__readonly int bucket_count;
+
+		HashTable(int bucket_count)
+		{
+			this->bucket_count = bucket_count;
+			this->nodes = (HashTableNode*)malloc(sizeof(HashTableNode) * bucket_count);
+		}
+	};
 };
 
