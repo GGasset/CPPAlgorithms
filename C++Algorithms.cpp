@@ -197,10 +197,14 @@ void ReverseLinkedList()
         }
 
         std::cout << toReverse->ToString() << "\n";
+        
+        DataStructures::SinglyLinkedListNode* reversed = toReverse->Reverse();
+        std::cout << reversed->ToString() << "\n";
 
         toReverse->free();
+        reversed->free();
 
-        std::cout << "\n\n";
+        std::cout << "\n";
     }
     free(numbers);
 }
