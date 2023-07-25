@@ -41,23 +41,22 @@ public:
 
 		SinglyLinkedListNode* Reverse(SinglyLinkedListNode* firstNode = NULL)
 		{
-			SinglyLinkedListNode* output = new SinglyLinkedListNode(this->value);
+			SinglyLinkedListNode* new_first_node = new SinglyLinkedListNode(this->value);
 
 			if (!firstNode)
 			{
-				firstNode = output;
+				firstNode = new_first_node;
 				return this->next->Reverse(firstNode);
 			}
 
-
+			new_first_node->next = firstNode;
 
 			if (!this->next)
 			{
-				return output;
+				return new_first_node;
 			}
-			SinglyLinkedListNode* new_first_node = this->next->Reverse(firstNode);
-			new_first_node->next = new_first_node;
-			return new_first_node;
+
+			return this->next->Reverse(new_first_node);
 		}
 
 		std::string ToString()
