@@ -5,10 +5,11 @@
 static class DataStructures
 {
 public:
+	template <typename T>
 	class SinglyLinkedListNode
 	{
 	public:
-		SinglyLinkedListNode(int value)
+		SinglyLinkedListNode(T value)
 		{
 			this->value = value;
 			this->next = 0;
@@ -77,10 +78,12 @@ public:
 		}
 	};
 
+	template <typename valueT>
 	class HashTable
 	{
 	private:
-		SinglyLinkedListNode* nodes;
+		SinglyLinkedListNode<int>** keys;
+		SinglyLinkedListNode<valueT>** values;
 
 	public:
 		__readonly int bucket_count;

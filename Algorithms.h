@@ -63,13 +63,13 @@ public:
 		/*
 			Queue for knowing which closing should go unless an new parenthesis opens.
 		*/
-		DataStructures::SinglyLinkedListNode* closingQueue = new DataStructures::SinglyLinkedListNode(0);
+		DataStructures::SinglyLinkedListNode<int>* closingQueue = new DataStructures::SinglyLinkedListNode<int>(0);
 
 		for (size_t i = 0; i < (currentC = input[i]) != '\000'; i++)
 		{
 			if (currentC == '(' || currentC == '[' || currentC == '{')
 			{
-				DataStructures::SinglyLinkedListNode* new_node = new DataStructures::SinglyLinkedListNode((int)currentC);
+				DataStructures::SinglyLinkedListNode<int>* new_node = new DataStructures::SinglyLinkedListNode<int>((int)currentC);
 				new_node->next = closingQueue;
 				closingQueue = new_node;
 			}
@@ -116,13 +116,13 @@ public:
 		}
 
 		int current_division_output = number;
-		DataStructures::SinglyLinkedListNode *remainders = new DataStructures::SinglyLinkedListNode(current_division_output % base);
+		DataStructures::SinglyLinkedListNode<int>*remainders = new DataStructures::SinglyLinkedListNode<int>(current_division_output % base);
 		current_division_output /= base;
 		int i = 1;
 		while (current_division_output)
 		{
 			int remainder = current_division_output % base;
-			remainders->GetLastNode()->next = new DataStructures::SinglyLinkedListNode(remainder);
+			remainders->GetLastNode()->next = new DataStructures::SinglyLinkedListNode<int>(remainder);
 			current_division_output /= base;
 
 			i++;
@@ -130,7 +130,7 @@ public:
 
 		std::string output = std::string();
 
-		DataStructures::SinglyLinkedListNode* current_remainder = remainders;
+		DataStructures::SinglyLinkedListNode<int>* current_remainder = remainders;
 		for (int j = 0; j < i; j++, current_remainder = current_remainder->next)
 		{
 			std::string digit = getNumberAsSingleDigit(current_remainder->value);

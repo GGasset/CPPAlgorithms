@@ -165,7 +165,7 @@ void ReverseLinkedList()
             break;
 
         char currentC;
-        DataStructures::SinglyLinkedListNode* toReverse = 0;
+        DataStructures::SinglyLinkedListNode<int>* toReverse = 0;
         for (size_t i = 0; (currentC = numbers[i]) != '\000'; i += 0)
         {
             i += currentC == ' ';
@@ -190,15 +190,15 @@ void ReverseLinkedList()
 
             if (!toReverse)
             {
-                toReverse = new DataStructures::SinglyLinkedListNode(parsedNumber);
+                toReverse = new DataStructures::SinglyLinkedListNode<int>(parsedNumber);
                 continue;
             }
-            toReverse->GetLastNode()->next = new DataStructures::SinglyLinkedListNode(parsedNumber);
+            toReverse->GetLastNode()->next = new DataStructures::SinglyLinkedListNode<int>(parsedNumber);
         }
 
         std::cout << toReverse->ToString() << "\n";
         
-        DataStructures::SinglyLinkedListNode* reversed = toReverse->Reverse();
+        DataStructures::SinglyLinkedListNode<int>* reversed = toReverse->Reverse();
         std::cout << reversed->ToString() << "\n";
 
         toReverse->free();
