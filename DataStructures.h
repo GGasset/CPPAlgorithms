@@ -90,6 +90,25 @@ public:
 			this->bucket_count = bucket_count;
 			this->nodes = (SinglyLinkedListNode*)malloc(sizeof(SinglyLinkedListNode) * bucket_count);
 		}
+
+		int GetHash(int value)
+		{
+			int hash = value;
+			hash = hash * (hash < bucket_count) + (bucket_count % hash) * (hash >= bucket_count);
+
+			return hash;
+		}
+
+		void Add(int value)
+		{
+
+		}
+
+	private:
+		void InsertAtBucket(int value, int i)
+		{
+
+		}
 	};
 };
 
