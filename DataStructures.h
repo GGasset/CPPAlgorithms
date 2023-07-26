@@ -18,6 +18,11 @@ public:
 		SinglyLinkedListNode* next;
 		int value;
 
+		SinglyLinkedListNode& operator[](int i)
+		{
+			return GetIndex(i);
+		}
+
 		SinglyLinkedListNode* GetIndex(size_t i)
 		{
 			if (i == 0)
@@ -106,26 +111,46 @@ public:
 		HashTable(int bucket_count)
 		{
 			this->bucket_count = bucket_count;
-			this->nodes = (SinglyLinkedListNode*)malloc(sizeof(SinglyLinkedListNode) * bucket_count);
+			this->keys = (SinglyLinkedListNode<int>**)malloc(sizeof(SinglyLinkedListNode<int>*) * bucket_count);
+			this->values = (SinglyLinkedListNode<valueT>**)malloc(sizeof(SinglyLinkedListNode<valueT>*) * bucket_count);
 		}
 
-		int GetHash(int value)
+		int GetHash(int key)
 		{
-			int hash = value;
+			int hash = key;
 			hash = hash * (hash < bucket_count) + (bucket_count % hash) * (hash >= bucket_count);
 
 			return hash;
 		}
 
-		void Add(int value)
+		void Add(int key, valueT value)
+		{
+			int bucketI = GetHash(key);
+			InsertAtBucket(key, value, bucketI);
+		}
+
+		valueT Get(int key)
 		{
 
 		}
 
 	private:
-		void InsertAtBucket(int value, int i)
+		void InsertAtBucket(int key, valueT value, int bucket_i)
 		{
+			if (!this->keys[bucket_i])
+			{
+				this->keys[bucket_i] = new SinglyLinkedListNode<int>(key);
+				this->values[bucket_i] = new SinglyLinkedListNode<valueT>(value);
+				return;
+			}
 
+			this->keys[bucket_i]->GetLastNode()->next = new SinglyLinkedListNode<int>(key);
+			this->values[bucket_i]->GetLastNode()->next = new SinglyLinkedListNode<valueT>(value);
+		}
+
+		valueT GetValueAtBucket(valueT value, int bucket_i, int node_i)
+		{
+			
 		}
 	};
 };
