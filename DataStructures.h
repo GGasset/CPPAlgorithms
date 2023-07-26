@@ -38,6 +38,15 @@ public:
 			return GetIndex(i - 1);
 		}
 
+		int GetValueIndex(T value, int i = 0)
+		{
+			if (this->value == value)
+				return i;
+			if (!this->next)
+				return -1;
+			return this->next->GetValueIndex(value, i++);
+		}
+
 		SinglyLinkedListNode* GetLastNode()
 		{
 			if (!this->next)
@@ -129,9 +138,16 @@ public:
 			InsertAtBucket(key, value, bucketI);
 		}
 
-		valueT Get(int key)
+		valueT Get(int key, bool &is_found)
 		{
+			int bucket_i = GetHash(key);
+			int node_i = keys[bucket_i]->GetValueIndex(key);
 
+			is_found = node_i != -1;
+			if (is_found)
+				return 0;
+
+			return GetValueAtBucket(bucket_i, node_i);
 		}
 
 	private:
@@ -148,9 +164,10 @@ public:
 			this->values[bucket_i]->GetLastNode()->next = new SinglyLinkedListNode<valueT>(value);
 		}
 
-		valueT GetValueAtBucket(valueT value, int bucket_i, int node_i)
+		valueT GetValueAtBucket(int bucket_i, int node_i)
 		{
-			
+			SinglyLinkedListNode<valueT> *bucket = values[bucket_i];
+			return bucket[0][node_i].value;
 		}
 	};
 };
