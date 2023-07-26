@@ -18,6 +18,21 @@ public:
 		SinglyLinkedListNode* next;
 		int value;
 
+		SinglyLinkedListNode* GetIndex(size_t i)
+		{
+			if (i == 0)
+			{
+				return this;
+			}
+			
+			if (!this->next)
+			{
+				return NULL;
+			}
+
+			return GetIndex(i - 1);
+		}
+
 		SinglyLinkedListNode* GetLastNode()
 		{
 			if (!this->next)
