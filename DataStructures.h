@@ -141,10 +141,14 @@ public:
 		valueT Get(int key, bool &is_found)
 		{
 			int bucket_i = GetHash(key);
+			is_found = keys[bucket_i] != 0;
+			if (!is_found)
+				return 0;
+
 			int node_i = keys[bucket_i]->GetValueIndex(key);
 
 			is_found = node_i != -1;
-			if (is_found)
+			if (!is_found)
 				return 0;
 
 			return GetValueAtBucket(bucket_i, node_i);
