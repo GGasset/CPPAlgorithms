@@ -221,7 +221,7 @@ void HashTableDemonstration()
     char* key = (char*)malloc(sizeof(char) * 50);
     char* value = (char*)malloc(sizeof(char) * 50);
 
-    std::cout << "Type cancel at any moment to go back to main menu" << "\n";
+    std::cout << "\n\n" << "Type cancel at any moment to go back to main menu" << "\n";
     while (true)
     {
         std::cout << "Do you want to add a value or get a value?" << "\n" << "\"get\" or \"add\"? ";
