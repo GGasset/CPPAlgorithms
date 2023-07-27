@@ -139,6 +139,7 @@ public:
 		{
 			int hash = key;
 			hash = hash * (hash < bucket_count) + (bucket_count % hash) * (hash >= bucket_count);
+			hash -= bucket_count * (hash == bucket_count);
 
 			return hash;
 		}
@@ -154,7 +155,7 @@ public:
 			int bucket_i = GetHash(key);
 			is_found = contains_values[bucket_i];
 			if (!is_found)
-				return 0;
+				throw std::string("Value not found");
 
 			int node_i = keys[bucket_i]->GetValueIndex(key);
 
