@@ -9,6 +9,7 @@ void validParenthesis();
 void changeBase10();
 void toBase10();
 void ReverseLinkedList();
+void HashTableDemonstration();
 
 
 int main()
@@ -18,7 +19,8 @@ int main()
     menu += "\"valid_parenthesis\"\n";
     menu += "\"change_base\" changes from base 10 to any base\n";
     menu += "\"to base 10\" changes a number from any base to base 10\n";
-    menu += "\"reverse linked list\" to reverse a input list of numbers";
+    menu += "\"reverse linked list\" to reverse a input list of numbers\n";
+    menu += "\"hash table\" To use a data structure that stores key-value pairs";
     while (true)
     {
 
@@ -36,6 +38,8 @@ int main()
             toBase10();
         if (!std::strcmp(input, "reverse linked list"))
             ReverseLinkedList();
+        if (!std::strcmp(input, "hash table"))
+            HashTableDemonstration();
     }
     free(input);
 }
@@ -207,6 +211,69 @@ void ReverseLinkedList()
         std::cout << "\n";
     }
     free(numbers);
+}
+
+void HashTableDemonstration()
+{
+    DataStructures::HashTable<std::string> table = DataStructures::HashTable<std::string>(500);
+
+    char* decision = (char*)malloc(sizeof(char) * 50);
+    char* key = (char*)malloc(sizeof(char) * 50);
+    char* value = (char*)malloc(sizeof(char) * 50);
+
+    std::cout << "Type cancel at any moment to go back to main menu" << "\n";
+    while (true)
+    {
+        std::cout << "Do you want to add a value or get a value?" << "\n" << "\"get\" or \"add\"? ";
+        std::cin.getline(decision, sizeof(char) * 50);
+        std::cout << "\n";
+        if (!std::strcmp(decision, "cancel"))
+            break;
+        try
+        {
+            if (!strcmp(decision, "get"))
+            {
+                std::cout << "Enter the key (Must be an integer)" << "\n" << "Key: ";
+                std::cin.getline(key, sizeof(char) * 50);
+                std::cout << "\n";
+                if (!std::strcmp(key, "cancel"))
+                    break;
+
+
+                bool is_found = false;
+                std::string value = table.Get(Algorithms::atoi(key), is_found);
+                
+                std::cout << "Value: " << value << "\n\n";
+            }
+            else if (!strcmp(decision, "add"))
+            {
+                std::cout << "Enter a key (Must be an integer)" << "\n" << "Key: ";
+                std::cin.getline(key, sizeof(char) * 50);
+                std::cout << "\n";
+                if (!std::strcmp(key, "cancel"))
+                    break;
+
+
+                std::cout << "Enter a value" << "\n" << "Value: ";
+                std::cin.getline(value, sizeof(char) * 50);
+                std::cout << "\n\n";
+                if (!std::strcmp(value, "cancel"))
+                    break;
+
+
+                table.Add(Algorithms::atoi(key), std::string(value));
+            }
+            else
+            {
+                std::cout << "Invalid option" << "\n\n";
+                continue;
+            }
+        }
+        catch (const std::string& err)
+        {
+            std::cout << err << "\n\n";
+        }
+    }
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
