@@ -16,11 +16,11 @@ public:
 		}
 
 		SinglyLinkedListNode* next;
-		int value;
+		T value;
 
 		SinglyLinkedListNode& operator[](int i)
 		{
-			return GetIndex(i);
+			return *GetIndex(i);
 		}
 
 		SinglyLinkedListNode* GetIndex(size_t i)
@@ -91,9 +91,14 @@ public:
 
 		std::string ToString()
 		{
-			if (!this->next)
-				return std::to_string(this->value);
-			return std::to_string(this->value) + "  ->  " + this->next->ToString();
+			if (!std::is_same<T, std::string>() && !std::is_same<T, int>())
+			{
+				if (!this->next)
+					return std::to_string(this->value);
+				return std::to_string(this->value) + "  ->  " + this->next->ToString();
+			}
+			else
+				throw "Type not supported at linkedList ToString()";
 		}
 
 		void free()
@@ -113,6 +118,7 @@ public:
 	private:
 		SinglyLinkedListNode<int>** keys;
 		SinglyLinkedListNode<valueT>** values;
+		bool* contains_values;
 
 	public:
 		__readonly int bucket_count;
@@ -122,6 +128,11 @@ public:
 			this->bucket_count = bucket_count;
 			this->keys = (SinglyLinkedListNode<int>**)malloc(sizeof(SinglyLinkedListNode<int>*) * bucket_count);
 			this->values = (SinglyLinkedListNode<valueT>**)malloc(sizeof(SinglyLinkedListNode<valueT>*) * bucket_count);
+			this->contains_values = (bool*)malloc(sizeof(bool) * bucket_count);
+			for (size_t i = 0; i < bucket_count; i++)
+			{
+				this->contains_values[i] = false;
+			}
 		}
 
 		int GetHash(int key)
@@ -141,7 +152,7 @@ public:
 		valueT Get(int key, bool &is_found)
 		{
 			int bucket_i = GetHash(key);
-			is_found = keys[bucket_i] != 0;
+			is_found = contains_values[bucket_i];
 			if (!is_found)
 				return 0;
 
@@ -157,10 +168,11 @@ public:
 	private:
 		void InsertAtBucket(int key, valueT value, int bucket_i)
 		{
-			if (!this->keys[bucket_i])
+			if (!this->contains_values[bucket_i])
 			{
 				this->keys[bucket_i] = new SinglyLinkedListNode<int>(key);
 				this->values[bucket_i] = new SinglyLinkedListNode<valueT>(value);
+				this->contains_values[bucket_i] = true;
 				return;
 			}
 
@@ -170,8 +182,8 @@ public:
 
 		valueT GetValueAtBucket(int bucket_i, int node_i)
 		{
-			SinglyLinkedListNode<valueT> *bucket = values[bucket_i];
-			return bucket[0][node_i].value;
+			//SinglyLinkedListNode<valueT> *bucket = ;
+			return values[bucket_i]->GetIndex(node_i)->value;
 		}
 	};
 };
