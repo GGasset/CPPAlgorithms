@@ -274,6 +274,9 @@ void HashTableDemonstration()
             std::cout << err << "\n\n";
         }
     }
+    free(decision);
+    free(key);
+    free(value);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
