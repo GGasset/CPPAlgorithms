@@ -266,5 +266,45 @@ private:
 		// -1 due to ASCII table starting from 0
 		return digit - '0';
 	}
+
+public:
+	static double divide(int dividend, int quotient, short division_guess = 2, bool calculate_decimal = false, int decimal_digit_count = 5)
+	{
+		if (division_guess < 2 || division_guess > 9)
+			throw std::string("Division_guess must be greater than 1 and less than 10");
+
+		bool add_next_digit = false;
+
+		std::string starting_number = std::string();
+
+	}
+
+	/// <summary>
+	/// Grabs starting from left, the greater, the earlier. If i is negative the same rule will apply but for decimals
+	/// </summary>
+	static short grab_digit(double number, int i)
+	{
+		number = abs(number);
+
+		if (number < 10 && i == 0)
+			return number;
+
+		for (size_t j = 0; (j < abs(i)) && (i < 0); j++)
+		{
+			number *= 10;
+		}
+
+		for (size_t j = 0; j < i; j++)
+		{
+			number /= 10;
+		}
+
+		number = (int)number;
+		number /= 10.0;
+		number -= (int)number;
+		number *= 10;
+
+		return number;
+	}
 };
 
