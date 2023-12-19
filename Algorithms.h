@@ -270,20 +270,57 @@ private:
 public:
 	static double divide(int dividend, int quotient, short division_guess = 2, bool calculate_decimal = false, int decimal_digit_count = 5)
 	{
+		if (!dividend)
+			return 0;
+
+		if (!quotient)
+			throw std::string("You just tried to divide by 0, I mean... duhhh");
+
+		if (quotient < 10 && quotient > -10)
+			return dividend / quotient;
+
 		if (division_guess < 2 || division_guess > 9)
 			throw std::string("Division_guess must be greater than 1 and less than 10");
 
+		bool positive_dividend = dividend > 0;
+		bool positive_quotient = quotient > 0;
+
 		bool add_next_digit = false;
 
-		std::string starting_number = std::string();
+		bool digit_inside_number = true;
+		int starting_number = 0;
+		int i = 0;
+		while (starting_number < quotient && digit_inside_number)
+		{
+			starting_number += get_digit(dividend, i, &digit_inside_number);
+			i++;
+		}
 
+		size_t number_positive_part_length = i;
+		for (size_t j = i, bool inside_number; inside_number; j++, get_digit(dividend, j, &inside_number))
+		{
+
+		}
+
+		if (starting_number > quotient)
+		{
+			do
+			{
+
+			} while (true);
+		}
+
+		double result = 0;
+
+		
 	}
 
 	/// <summary>
 	/// Grabs starting from left, the greater, the earlier. If i is negative the same rule will apply but for decimals
 	/// </summary>
-	static short grab_digit(double number, int i)
+	static short get_digit(double number, int i, bool* digit_inside_number)
 	{
+		double original = number;
 		number = abs(number);
 
 		if (number < 10 && i == 0)
@@ -294,15 +331,24 @@ public:
 			number *= 10;
 		}
 
+		if (digit_inside_number)
+			*digit_inside_number = (number - (int)number) != 0 && i < 0;
+
 		for (size_t j = 0; j < i; j++)
 		{
 			number /= 10;
 		}
 
+		if (digit_inside_number)
+			*digit_inside_number = ((int)number != 0 && i >= 0) || digit_inside_number;
+
+		//*digit_inside_number = (number != 0) || (!original && i == 0);
 		number = (int)number;
 		number /= 10.0;
 		number -= (int)number;
 		number *= 10;
+		if (digit_inside_number)
+			*digit_inside_number = number != 0 || *digit_inside_number;
 
 		return number;
 	}
