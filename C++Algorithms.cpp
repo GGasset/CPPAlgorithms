@@ -10,6 +10,7 @@ void changeBase10();
 void toBase10();
 void ReverseLinkedList();
 void HashTableDemonstration();
+void ReverseDemonstration();
 
 
 int main()
@@ -20,7 +21,8 @@ int main()
     menu += "\"change_base\" changes from base 10 to any base\n";
     menu += "\"to base 10\" changes a number from any base to base 10\n";
     menu += "\"reverse linked list\" to reverse a input list of numbers\n";
-    menu += "\"hash table\" To use a data structure that stores key-value pairs";
+    menu += "\"hash table\" To use a data structure that stores key-value pairs\n";
+    menu += "\"reverse inplace\" to reverse a fixed size integer array inplace (without creating a copy)\n";
     while (true)
     {
 
@@ -40,8 +42,46 @@ int main()
             ReverseLinkedList();
         if (!std::strcmp(input, "hash table"))
             HashTableDemonstration();
+        if (!std::strcmp(input, "reverse inplace"))
+            ReverseDemonstration();
     }
     free(input);
+}
+
+DataStructures::SinglyLinkedListNode<int>* GetListInput(char* numbers, char separator = ' ')
+{
+    char currentC;
+    DataStructures::SinglyLinkedListNode<int>* list = 0;
+    for (size_t i = 0; (currentC = numbers[i]) != '\000'; i += 0)
+    {
+        i += currentC == ' ';
+
+        size_t number_length = 0;
+        for (size_t j = i; numbers[j] != ' ' && numbers[j] != '\000'; j++, number_length++) {}
+        if (!number_length)
+            continue;
+
+        char* number = (char*)malloc(sizeof(char) * number_length + 1);
+        if (!number)
+            throw std::string("Not enough memory");
+
+        for (size_t j = 0; j < number_length && numbers[i] != '\000' && numbers[i] != ' '; j++, i++)
+        {
+            currentC = numbers[i];
+            number[j] = currentC;
+        }
+        number[number_length] = '\000';
+
+        int parsedNumber = Algorithms::atoi(number);
+        free(number);
+        if (!list)
+        {
+            list = new DataStructures::SinglyLinkedListNode<int>(parsedNumber);
+            continue;
+        }
+        list->GetLastNode()->next = new DataStructures::SinglyLinkedListNode<int>(parsedNumber);
+    }
+    return list;
 }
 
 void stringToInteger()
@@ -168,37 +208,7 @@ void ReverseLinkedList()
         if (!std::strcmp(numbers, "cancel"))
             break;
 
-        char currentC;
-        DataStructures::SinglyLinkedListNode<int>* toReverse = 0;
-        for (size_t i = 0; (currentC = numbers[i]) != '\000'; i += 0)
-        {
-            i += currentC == ' ';
-
-            size_t number_length = 0;
-            for (size_t j = i; numbers[j] != ' ' && numbers[j] != '\000'; j++, number_length++) {}
-            if (!number_length)
-                continue;
-
-            char* number = (char*)malloc(sizeof(char) * number_length + 1);
-            if (!number)
-                throw std::string("Not enough memory");
-
-            for (size_t j = 0; j < number_length && numbers[i] != '\000' && numbers[i] != ' '; j++, i++)
-            {
-                currentC = numbers[i];
-                number[j] = currentC;
-            }
-            number[number_length] = '\000';
-
-            int parsedNumber = Algorithms::atoi(number);
-
-            if (!toReverse)
-            {
-                toReverse = new DataStructures::SinglyLinkedListNode<int>(parsedNumber);
-                continue;
-            }
-            toReverse->GetLastNode()->next = new DataStructures::SinglyLinkedListNode<int>(parsedNumber);
-        }
+        DataStructures::SinglyLinkedListNode<int>* toReverse = GetListInput(numbers);
 
         std::cout << toReverse->ToString() << "\n";
         
@@ -278,6 +288,38 @@ void HashTableDemonstration()
     free(key);
     free(value);
 }
+
+void ReverseDemonstration()
+{
+    char* input = new char[2000];
+    
+    while (true)
+    {
+        std::cout << std::endl << "Type \"cancel\" to exit this demonstration" << std::endl << "Enter a list of values separated by spaces" << std::endl << "Numbers: ";
+        std::cin.getline(input, 2000);
+        std::cout << std::endl;
+        if (!strcmp(input, "cancel"))
+            break;
+
+        DataStructures::SinglyLinkedListNode<int>* parsed = GetListInput(input);
+        size_t length = parsed->GetLength();
+        int* output = parsed->ToArray();
+        parsed->free();
+
+        for (size_t i = 0; i < length; i++)
+            std::cout << output[i] << " ";
+        std::cout << std::endl;
+
+        Algorithms::ReverseInplace(output, length);
+
+        for (size_t i = 0; i < length; i++)
+            std::cout << output[i] << " ";
+        std::cout << std::endl;
+    }
+    
+    delete[] input;
+}
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

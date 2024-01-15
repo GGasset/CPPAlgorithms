@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <functional>
 
 #pragma once
 static class DataStructures
@@ -89,16 +90,27 @@ public:
 			return this->next->Reverse(new_first_node);
 		}
 
+		T* ToArray(size_t i = 0, T* array = 0)
+		{
+			if (!array)
+			{
+				size_t list_length = GetLength();
+				array = new T[list_length];
+			}
+
+			array[i] = this->value;
+			if (this->next)
+			{
+				return this->next->ToArray(i + 1, array);
+			}
+			return array;
+		}
+
 		std::string ToString()
 		{
-			if (!std::is_same<T, std::string>() && !std::is_same<T, int>())
-			{
-				if (!this->next)
-					return std::to_string(this->value);
-				return std::to_string(this->value) + "  ->  " + this->next->ToString();
-			}
-			else
-				throw "Type not supported at linkedList ToString()";
+			if (!this->next)
+				return std::to_string(this->value);
+			return std::to_string(this->value) + "==>" + this->next->ToString();
 		}
 
 		void free()
@@ -109,6 +121,24 @@ public:
 				return;
 			}
 			this->next->free();
+		}
+
+		void iterate(std::function<void(SinglyLinkedListNode* current, int i)> iterateFunc, int i = 0)
+		{
+			iterateFunc(this, i);
+			if (this->next)
+			{
+				this->next->iterate(iterateFunc, i + 1);
+			}
+		}
+
+		size_t GetLength(size_t i = 1)
+		{
+			if (!this->next)
+			{
+				return i;
+			}
+			return this->next->GetLength(i + 1);
 		}
 	};
 
@@ -129,7 +159,7 @@ public:
 			this->keys = (SinglyLinkedListNode<int>**)malloc(sizeof(SinglyLinkedListNode<int>*) * bucket_count);
 			this->values = (SinglyLinkedListNode<valueT>**)malloc(sizeof(SinglyLinkedListNode<valueT>*) * bucket_count);
 			this->contains_values = (bool*)malloc(sizeof(bool) * bucket_count);
-			for (size_t i = 0; i < bucket_count; i++)
+			for (size_t i = 0; i < bucket_count && contains_values; i++)
 			{
 				this->contains_values[i] = false;
 			}
@@ -164,6 +194,13 @@ public:
 				return 0;
 
 			return GetValueAtBucket(bucket_i, node_i);
+		}
+
+		void free()
+		{
+			std::free(keys);
+			std::free(values);
+			std::free(contains_values);
 		}
 
 	private:

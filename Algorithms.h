@@ -268,7 +268,7 @@ private:
 	}
 
 public:
-	static double divide(int dividend, int quotient, short division_guess = 2, bool calculate_decimal = false, int decimal_digit_count = 5)
+	/*static double divide(int dividend, int quotient, short division_guess = 2, bool calculate_decimal = false, int decimal_digit_count = 5)
 	{
 		if (!dividend)
 			return 0;
@@ -313,7 +313,7 @@ public:
 		double result = 0;
 
 		
-	}
+	}*/
 
 	/// <summary>
 	/// Grabs starting from left, the greater, the earlier. If i is negative the same rule will apply but for decimals
@@ -351,6 +351,73 @@ public:
 			*digit_inside_number = number != 0 || *digit_inside_number;
 
 		return number;
+	}
+
+	static void ReverseInplace(int* array, size_t array_length)
+	{
+		bool length_is_odd = array_length % 2;
+		for (size_t i = 0; i < array_length / 2; i++)
+		{
+			size_t j = array_length - i - 1;
+			int current_value = array[i];
+
+			array[i] = array[j];
+			array[j] = current_value;
+		}
+	}
+
+	static int* TwoSum(DataStructures::SinglyLinkedListNode<int>* numbers, int target)
+	{
+		DataStructures::HashTable<int> table = DataStructures::HashTable<int>(100);
+
+		DataStructures::SinglyLinkedListNode<int>* current_number = numbers;
+		do
+		{
+			table.Add(current_number->value, current_number->value);
+
+			current_number = current_number->next;
+		} while (current_number);
+
+		current_number = numbers;
+		int result[2]{};
+		bool is_found = false;
+		size_t i = 0;
+		do
+		{
+			int current = current_number->value;
+			int searched = target - current;
+			if (searched > 0)
+			{
+				table.Get(searched, is_found);
+				result[0] = i;
+				result[1] = searched;
+			}
+
+			current_number = current_number->next;
+			i++;
+		} while (current_number && !is_found);
+
+		table.free();
+		if (!is_found)
+		{
+			numbers->free();
+			return 0;
+		}
+
+		is_found = false;
+		current_number = numbers;
+		i = 0;
+		do
+		{
+			// Set result[1] to i if result[1] equals current number
+			result[1] += (i - result[1]) * (current_number->value == result[1]);
+
+			current_number = current_number->next;
+			i++;
+		} while (current_number && !is_found);
+
+		numbers->free();
+		return result;
 	}
 };
 
