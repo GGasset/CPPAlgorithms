@@ -322,6 +322,16 @@ void ReverseDemonstration()
     delete[] input;
 }
 
+void TwoSumDemonstration()
+{
+    char input[2000]{};
+    while (true)
+    {
+        std::cout << "Type \"cancel\" to exit to the menu" << std::endl << "Enter a target value: ";
+
+    }
+}
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

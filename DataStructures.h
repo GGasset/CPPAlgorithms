@@ -90,6 +90,25 @@ public:
 			return this->next->Reverse(new_first_node);
 		}
 
+		static SinglyLinkedListNode<T>* AddRange(SinglyLinkedListNode<T>* start_node, 
+			T* values, size_t array_length, size_t values_start_i = 0, 
+			SinglyLinkedListNode<T>* node_after_last_created_node = 0, SinglyLinkedListNode<T>* current_node = 0)
+		{
+			start_node = start_node ? start_node : new SinglyLinkedListNode<T>(0);
+			
+			current_node = current_node ? current_node : start_node;
+			current_node->value = values[values_start_i];
+
+			if (values_start_i < array_length)
+			{
+				start_node->next = AddRange(start_node, values, array_length, values_start_i + 1, node_after_last_created_node, current_node->next);
+				return start_node;
+			}
+
+			current_node->next = node_after_last_created_node;
+			return start_node;
+		}
+
 		T* ToArray(size_t i = 0, T* array = 0)
 		{
 			if (!array)
