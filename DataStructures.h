@@ -109,7 +109,7 @@ public:
 			return start_node;
 		}
 
-		T* ToArray(size_t i = 0, T* array = 0)
+		T* ToArray(bool free_nodes = false, size_t i = 0, T* array = 0)
 		{
 			if (!array)
 			{
@@ -120,7 +120,11 @@ public:
 			array[i] = this->value;
 			if (this->next)
 			{
-				return this->next->ToArray(i + 1, array);
+				this->next->ToArray(false, i + 1, array);
+			}
+			if (free_nodes)
+			{
+				this->free();
 			}
 			return array;
 		}
