@@ -237,8 +237,9 @@ public:
 				continue;
 			}
 
-			int digit_as_base_10 = getSingleDigitAsNumber(currentC, number_base) * std::pow(number_base, i_multiplier);
-			if (digit_as_base_10 >= number_base)
+			int not_powered_number = getSingleDigitAsNumber(currentC, number_base);
+			int digit_as_base_10 = not_powered_number * std::pow(number_base, i_multiplier);
+			if (not_powered_number >= number_base)
 				throw std::string("Digit higher than base.");
 
 			output += digit_as_base_10;
