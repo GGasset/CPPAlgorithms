@@ -315,6 +315,8 @@ void ReverseDemonstration()
         for (size_t i = 0; i < length; i++)
             std::cout << output[i] << " ";
         std::cout << std::endl;
+
+        delete[] output;
     }
     
     delete[] input;
