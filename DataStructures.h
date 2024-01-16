@@ -146,12 +146,12 @@ public:
 			this->next->free();
 		}
 
-		void iterate(std::function<void(SinglyLinkedListNode* current, int i)> iterateFunc, int i = 0)
+		bool iterate(std::function<bool(SinglyLinkedListNode* current, int i)> iterateFunc, int i = 0)
 		{
-			iterateFunc(this, i);
+			bool current_out = iterateFunc(this, i);
 			if (this->next)
 			{
-				this->next->iterate(iterateFunc, i + 1);
+				return current_out || this->next->iterate(iterateFunc, i + 1);
 			}
 		}
 
