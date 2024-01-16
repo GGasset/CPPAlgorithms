@@ -36,7 +36,7 @@ public:
 				return NULL;
 			}
 
-			return GetIndex(i - 1);
+			return next->GetIndex(i - 1);
 		}
 
 		size_t GetLastIndex(T value)
@@ -165,7 +165,7 @@ public:
 
 		void free()
 		{
-			if (this->next == 0)
+			if (!this->next)
 			{
 				std::free(this);
 				return;
