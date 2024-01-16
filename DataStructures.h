@@ -19,9 +19,9 @@ public:
 		SinglyLinkedListNode* next;
 		T value;
 
-		SinglyLinkedListNode& operator[](int i)
+		SinglyLinkedListNode* operator[](int i)
 		{
-			return *GetIndex(i);
+			return GetIndex(i);
 		}
 
 		SinglyLinkedListNode* GetIndex(size_t i)
@@ -39,6 +39,23 @@ public:
 			return GetIndex(i - 1);
 		}
 
+		size_t GetLastIndex(T value)
+		{
+			int output = -1;
+
+			SinglyLinkedListNode<T>* current = this;
+			size_t i = 0;
+			while (current)
+			{
+				output += (i - output) * (value == current->value);
+
+				i++;
+				current = current->next;
+			}
+
+			return output;
+		}
+
 		int GetValueIndex(T value, int i = 0)
 		{
 			if (this->value == value)
@@ -46,6 +63,16 @@ public:
 			if (!this->next)
 				return -1;
 			return this->next->GetValueIndex(value, i++);
+		}
+
+		size_t Count(T value, size_t starting_count = 0)
+		{
+			starting_count += value == this->value;
+			if (this->next)
+			{
+				starting_count += this->next->Count(value, starting_count);
+			}
+			return starting_count;
 		}
 
 		SinglyLinkedListNode* GetLastNode()
