@@ -30,7 +30,7 @@ public:
 			{
 				return this;
 			}
-			
+
 			if (!this->next)
 			{
 				return NULL;
@@ -117,12 +117,12 @@ public:
 			return this->next->Reverse(new_first_node);
 		}
 
-		static SinglyLinkedListNode<T>* AddRange(SinglyLinkedListNode<T>* start_node, 
-			T* values, size_t array_length, size_t values_start_i = 0, 
+		static SinglyLinkedListNode<T>* AddRange(SinglyLinkedListNode<T>* start_node,
+			T* values, size_t array_length, size_t values_start_i = 0,
 			SinglyLinkedListNode<T>* node_after_last_created_node = 0, SinglyLinkedListNode<T>* current_node = 0)
 		{
 			start_node = start_node ? start_node : new SinglyLinkedListNode<T>(0);
-			
+
 			current_node = current_node ? current_node : start_node;
 			current_node->value = values[values_start_i];
 
@@ -192,11 +192,11 @@ public:
 		}
 	};
 
-	template <typename valueT>
+	template <typename keyT, typename valueT>
 	class HashTable
 	{
 	private:
-		SinglyLinkedListNode<int>** keys;
+		SinglyLinkedListNode<keyT>** keys;
 		SinglyLinkedListNode<valueT>** values;
 		bool* contains_values;
 
@@ -215,22 +215,41 @@ public:
 			}
 		}
 
-		int GetHash(int key)
+		virtual size_t GetHash(keyT key)
 		{
-			int hash = key;
-			hash = hash * (hash < bucket_count) + (bucket_count % hash) * (hash >= bucket_count);
-			hash -= bucket_count * (hash == bucket_count);
+			type_info kt = typeid(keyT);
+			if (kt == typeid(short) || kt == typeid(int) || kt == typeid(size_t) || kt == typeid(long) || kt == typeid(long long))
+			{
+				int hash = key;
+				hash = hash * (hash < bucket_count) + (bucket_count % hash) * (hash >= bucket_count);
+				hash -= bucket_count * (hash == bucket_count);
 
-			return hash;
+				return hash;
+			}
+			if (kt == typeid(char*) || kt == typeid(std::string))
+			{
+				size_t hash = 0;
+
+				char currentC;
+				size_t i = 0;
+				while (currentC = key[i] && i < 20)
+				{
+					hash += currentC;
+				}
+				
+				hash %= bucket_count;
+
+				return hash;
+			}
 		}
 
-		void Add(int key, valueT value)
+		void Add(keyT key, valueT value)
 		{
-			int bucketI = GetHash(key);
+			size_t bucketI = GetHash(key);
 			InsertAtBucket(key, value, bucketI);
 		}
 
-		valueT Get(int key, bool &is_found)
+		valueT Get(keyT key, bool& is_found)
 		{
 			int bucket_i = GetHash(key);
 			is_found = contains_values[bucket_i];
@@ -248,23 +267,28 @@ public:
 
 		void free()
 		{
+			for (size_t i = 0; i < bucket_count && keys && values; i++)
+			{
+				keys[i]->free();
+				values[i]->free()
+			}
 			std::free(keys);
 			std::free(values);
 			std::free(contains_values);
 		}
 
 	private:
-		void InsertAtBucket(int key, valueT value, int bucket_i)
+		void InsertAtBucket(keyT key, valueT value, int bucket_i)
 		{
 			if (!this->contains_values[bucket_i])
 			{
-				this->keys[bucket_i] = new SinglyLinkedListNode<int>(key);
+				this->keys[bucket_i] = new SinglyLinkedListNode<keyT>(key);
 				this->values[bucket_i] = new SinglyLinkedListNode<valueT>(value);
 				this->contains_values[bucket_i] = true;
 				return;
 			}
 
-			this->keys[bucket_i]->GetLastNode()->next = new SinglyLinkedListNode<int>(key);
+			this->keys[bucket_i]->GetLastNode()->next = new SinglyLinkedListNode<keyT>(key);
 			this->values[bucket_i]->GetLastNode()->next = new SinglyLinkedListNode<valueT>(value);
 		}
 
@@ -275,4 +299,3 @@ public:
 		}
 	};
 };
-
