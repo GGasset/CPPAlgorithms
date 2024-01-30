@@ -139,7 +139,7 @@ int main()
     free(input);
 }
 
-DataStructures::SinglyLinkedListNode<int>* GetListInput(char* numbers, char separator = ' ')
+static DataStructures::SinglyLinkedListNode<int>* GetListInput(char* numbers, char separator = ' ')
 {
     char currentC;
     DataStructures::SinglyLinkedListNode<int>* list = 0;
