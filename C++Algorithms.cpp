@@ -11,39 +11,130 @@ void toBase10();
 void ReverseLinkedList();
 void HashTableDemonstration();
 void ReverseDemonstration();
+void TwoSumDemonstration();
+void LongestParenthesisSubtringDemonstration();
 
+static void ParenthesisMenu()
+{
+    std::string description = "Algorithms regarding parenthesis\n";
+
+    std::string entries = description + "Type \"cancel\" to exit this menu.\n\n";
+    entries += "\"valid parenthesis\" to check if given strings have valid parenthesis\n";
+    entries += "\"longest valid parenthesis\" in a input with just '(' and ')' will search for the longest valid substring. LeetCode difficulty: Hard\n";
+
+    while (true)
+    {
+        std::cout << entries << std::endl;
+        char* in = new char[150];
+        std::cin.getline(in, 150);
+
+        if (!strcmp(in, "cancel"))
+        {
+            delete[] in;
+            return;
+        }
+        if (!strcmp(in, "valid parenthesis"))
+            validParenthesis();
+        if (!strcmp(in, "longest valid parenthesis"))
+            LongestParenthesisSubtringDemonstration();
+    }
+
+}
 
 int main()
 {
+    /*std::string presentation = "";
+    presentation += "|                                 ?            ?                              \n";
+    presentation += "|                               /  \\         // \\\\                           \n";
+    presentation += "|                              /    \\       //   \\\\                          \n";
+    presentation += "|                            ////####\\     //#####\\\\                         \n";
+    presentation += "|                            ||||     \\###//                                 \n";
+    presentation += "|                       _   *||||     ... ...                                \n";
+    presentation += "|                   *        ||||      *   *                                 \n";
+    presentation += "|                 *=|||      ||||      _______                               \n";
+    presentation += "|               *==*|||      ||||     | ___  ))                               \n";
+    presentation += "|-------------*==*--|||      ||||     |===| //---------------------------------                                \n";
+    presentation += "|           *==*    |||      ||||          //                                 \n";
+    presentation += "|           |==|    |||      ||||         //                                  \n";
+    presentation += "|           |==|     \\\\\\     ||||        //                                 \n";
+    presentation += "|           |==|      \\\\\\####++++#######//                                   \n";
+    presentation += "|           |=/         |||  |||| ||__ ||__                                 \n";
+    presentation += "|           |/         (___))|||| (___)(___)                                        \n";
+    presentation += "|----------------------------||||--------------------------------------------\n";
+    presentation += "|                            ||||                                       \n";
+    presentation += "|                         ?---++--?                                     \n";
+    presentation += "|                          \\     /                                     \n";
+    presentation += "|                           \\   /                                      \n";
+    presentation += "|                            \\ /                                       \n";
+    presentation += "|                             ?\n";
+
+    presentation += "                                                          Press Enter\n";
+    std::cout << presentation << std::endl << std::endl;*/
+
+    std::string presentation = "";
+    presentation += "|                                                                         \n";
+    presentation += "|                            ////####\\     //#####\\                         \n";
+    presentation += "|                            ||||     \\###//                                  \n";
+    presentation += "|                    _       ||||                                         \n";
+    presentation += "|                   /#\\      ||||                                           \n";
+    presentation += "|                 *=|||      ||||      _______                               \n";
+    presentation += "|               *==*|||      ||||     | ___  ))                               \n";
+    presentation += "|             *==*--|||      ||||     |===| //                                \n";
+    presentation += "|           *==*    |||      ||||          //                                 \n";
+    presentation += "|           |==|    |||      ||||         //                                  \n";
+    presentation += "|           |==|     \\\\\\     ||||        //                                 \n";
+    presentation += "|           |==|      \\\\\\####++++#######//                                   \n";
+    presentation += "|           |=/              ||||                                        \n";
+    presentation += "|                            ||||\n";
+    presentation += "|                            ||||                                       \n";
+    presentation += "|                         ?--++++-?                                     \n";
+    presentation += "|                          \\     /                                     \n";
+    presentation += "|                           \\   /                                      \n";
+    presentation += "|                            \\ /                                       \n";
+    presentation += "|                             ?\n";
+
+    presentation += "                                                          Press Enter\n";
+    std::cout << presentation << std::endl << std::endl;
+    std::cin.get();
+
     char* input = (char*)malloc(sizeof(char) * 100);
     std::string menu = "Enter a command mentioned below to execute a home-made program\n\"cancel\" to exit the program\n\"atoi\" basically a string to integer\n";
-    menu += "\"valid_parenthesis\"\n";
+    menu += "\"parenthesis\" for parenthesis related algorithms\n";
     menu += "\"change_base\" changes from base 10 to any base\n";
     menu += "\"to base 10\" changes a number from any base to base 10\n";
     menu += "\"reverse linked list\" to reverse a input list of numbers\n";
     menu += "\"hash table\" To use a data structure that stores key-value pairs\n";
     menu += "\"reverse inplace\" to reverse a fixed size integer array inplace (without creating a copy)\n";
+    menu += "\"two sum\" to find two values that sum up to a target value\n";
     while (true)
     {
-
-        std::cout << menu << "\n";
-        std::cin.getline(input, sizeof(char) * 100);
-        if (!std::strcmp(input, "cancel"))
-            break;
-        if (!std::strcmp(input, "atoi"))
-            stringToInteger();
-        if (!std::strcmp(input, "valid_parenthesis"))
-            validParenthesis();
-        if (!std::strcmp(input, "change_base"))
-            changeBase10();
-        if (!std::strcmp(input, "to base 10"))
-            toBase10();
-        if (!std::strcmp(input, "reverse linked list"))
-            ReverseLinkedList();
-        if (!std::strcmp(input, "hash table"))
-            HashTableDemonstration();
-        if (!std::strcmp(input, "reverse inplace"))
-            ReverseDemonstration();
+        try
+        {
+            std::cout << menu << std::endl;
+            std::cin.getline(input, sizeof(char) * 100);
+            if (!std::strcmp(input, "cancel"))
+                break;
+            if (!std::strcmp(input, "atoi"))
+                stringToInteger();
+            if (!std::strcmp(input, "parenthesis"))
+                ParenthesisMenu();
+            if (!std::strcmp(input, "change_base"))
+                changeBase10();
+            if (!std::strcmp(input, "to base 10"))
+                toBase10();
+            if (!std::strcmp(input, "reverse linked list"))
+                ReverseLinkedList();
+            if (!std::strcmp(input, "hash table"))
+                HashTableDemonstration();
+            if (!std::strcmp(input, "reverse inplace"))
+                ReverseDemonstration();
+            if (!std::strcmp(input, "two sum"))
+                TwoSumDemonstration();
+        }
+        catch (const std::string& e)
+        {
+            std::cout << e << std::endl;
+        }
     }
     free(input);
 }
@@ -324,12 +415,61 @@ void ReverseDemonstration()
 
 void TwoSumDemonstration()
 {
-    char input[2000]{};
+    char input[2000]{""};
     while (true)
     {
-        std::cout << "Type \"cancel\" to exit to the menu" << std::endl << "Enter a target value: ";
+        std::cout << std::endl << "Type \"cancel\" to exit to the menu" << std::endl << "Enter a target value: ";
+        std::cin.getline(input, 2000);
+        if (!strcmp(input, "cancel"))
+            break;
 
+        int target = Algorithms::atoi(input);
+        
+        std::cout << "Enter a list of values:" << std::endl;
+        std::cin.getline(input, 2000);
+        auto numbers = GetListInput(input);
+
+        int* answer = Algorithms::TwoSum(numbers, target);
+        if (!answer)
+        {
+            std::cout << "No numbers found that sum up to " << target << std::endl;
+            continue;
+        }
+
+        int first_indice = answer[0];
+        int second_indice = answer[1];
+
+        //DataStructures::SinglyLinkedListNode<int>* current_node = ;
+        int first_value = numbers->GetIndex(first_indice)->value;
+
+        int second_value = numbers->GetIndex(second_indice)->value;
+
+        std::cout << first_indice << " item (" << first_value << ") + " << second_indice << " item (" << second_value << ") = " << target << std::endl << std::endl;
+
+        numbers->free();
     }
+}
+
+void LongestParenthesisSubtringDemonstration()
+{
+    char* in = new char[2000];
+    while (true)
+    {
+        std::cout << "Enter a parenthesis string [only '(' or ')']" << std::endl << "String: ";
+        std::cin.getline(in, 2000);
+        if (!strcmp(in, "cancel"))
+            break;
+
+        std::string output = Algorithms::LongestValidParenthesisSubstring(in);
+        if (!output.length())
+        {
+            std::cout << "No correct substring was found" << std::endl;
+            continue;
+        }
+
+        std::cout << "Longest valid substring: " << output << std::endl << std::endl;
+    }
+    delete[] in;
 }
 
 

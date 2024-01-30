@@ -51,11 +51,20 @@ public:
 		return output;
 	}
 
-	static bool ValidParenthesis(char* input)
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="string_i">character index at which the string was calculated to be false</param>
+	/// <returns></returns>
+	static bool ValidParenthesis(char* input, size_t start_i = 0, size_t* string_i = 0)
 	{
 		size_t parenthesisTypesCount = 3;
 		size_t input_length = 0;
 		for (int i = 0; input[i] != '\000'; i++, input_length++) {  }
+		if (start_i > input_length)
+		{
+			throw std::string("Index out of range");
+		}
 
 		// Process data
 		char currentC;
@@ -65,7 +74,8 @@ public:
 		*/
 		DataStructures::SinglyLinkedListNode<int>* closingQueue = new DataStructures::SinglyLinkedListNode<int>(0);
 
-		for (size_t i = 0; i < (currentC = input[i]) != '\000'; i++)
+		size_t last_valid_i = start_i;
+		for (size_t i = start_i; i < (currentC = input[i]) != '\000'; i++)
 		{
 			if (currentC == '(' || currentC == '[' || currentC == '{')
 			{
@@ -78,7 +88,10 @@ public:
 				char openingEquivalent = currentC - (2 * (currentC == ']' || currentC == '}')) - (currentC == ')');
 				if (closingQueue[0].value == openingEquivalent)
 				{
+					auto previous_node = closingQueue;
 					closingQueue = closingQueue->next;
+					delete previous_node;
+					last_valid_i += (i - last_valid_i) * (closingQueue->GetLength() == 1);
 				}
 				else
 				{
@@ -97,6 +110,48 @@ public:
 			auto currentNode = previousNode->next;
 			free(previousNode);
 			previousNode = currentNode;
+		}
+
+		*string_i += (last_valid_i - *string_i) * !output;
+		return output;
+	}
+
+	static std::string LongestValidParenthesisSubstring(char* input)
+	{
+		size_t string_length = 0;
+		bool contains_invalid = false;
+		char current_c = input[0];
+		for (size_t i = 0; current_c != '\000'; i++, current_c = input[i], string_length++)
+		{
+			contains_invalid = contains_invalid || (current_c != '(' && current_c != ')');
+		}
+		if (contains_invalid)
+		{
+			throw std::string("Characters other than '(' and ')' are prohibited");
+		}
+
+		int longest_start_i = -1;
+		size_t longest_substring = 0;
+		size_t i = 0;
+		do
+		{
+			size_t prev_i = i;
+			bool valid_until_end = ValidParenthesis(input, i, &i);
+			i += !valid_until_end;
+			i += (string_length - i) * valid_until_end;
+			size_t valid_length = i - prev_i;
+			
+			// Set best match if needed
+			bool current_longest = (valid_length > longest_substring) && (valid_length > 1);
+			longest_start_i += (prev_i - longest_start_i) * current_longest;
+			longest_substring += (valid_length - longest_substring) * current_longest;
+		} 
+		while (i < string_length);
+
+		std::string output = std::string();
+		for (size_t i = 0; i < longest_substring; i++)
+		{
+			output += input[longest_start_i + i];
 		}
 
 		return output;
@@ -372,26 +427,32 @@ public:
 		DataStructures::HashTable<int> table = DataStructures::HashTable<int>(100);
 
 		DataStructures::SinglyLinkedListNode<int>* current_number = numbers;
+		int i = 0;
 		do
 		{
-			table.Add(current_number->value, current_number->value);
+			table.Add(current_number->value, i);
 
 			current_number = current_number->next;
+			i++;
 		} while (current_number);
 
 		current_number = numbers;
 		int result[2]{};
 		bool is_found = false;
-		size_t i = 0;
+		i = 0;
 		do
 		{
 			int current = current_number->value;
 			int searched = target - current;
 			if (searched > 0)
 			{
-				table.Get(searched, is_found);
+				int second_index = table.Get(searched, is_found);
 				result[0] = i;
-				result[1] = searched;
+				result[1] = second_index;
+				if (i == second_index)
+				{
+					is_found = i != (result[1] = numbers->GetLastIndex(searched));
+				}
 			}
 
 			current_number = current_number->next;
@@ -399,25 +460,12 @@ public:
 		} while (current_number && !is_found);
 
 		table.free();
+
 		if (!is_found)
 		{
-			numbers->free();
 			return 0;
 		}
 
-		is_found = false;
-		current_number = numbers;
-		i = 0;
-		do
-		{
-			// Set result[1] to i if result[1] equals current number
-			result[1] += (i - result[1]) * (current_number->value == result[1]);
-
-			current_number = current_number->next;
-			i++;
-		} while (current_number && !is_found);
-
-		numbers->free();
 		return result;
 	}
 };
