@@ -424,7 +424,7 @@ public:
 
 	static int* TwoSum(DataStructures::SinglyLinkedListNode<int>* numbers, int target)
 	{
-		DataStructures::HashTable<int> table = DataStructures::HashTable<int>(100);
+		DataStructures::HashTable<int, int> table = DataStructures::HashTable<int>(100);
 
 		DataStructures::SinglyLinkedListNode<int>* current_number = numbers;
 		int i = 0;
