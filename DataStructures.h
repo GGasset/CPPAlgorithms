@@ -217,8 +217,7 @@ public:
 
 		virtual size_t GetHash(keyT key)
 		{
-			type_info kt = typeid(keyT);
-			if (kt == typeid(short) || kt == typeid(int) || kt == typeid(size_t) || kt == typeid(long) || kt == typeid(long long))
+			if (typeid(keyT) == typeid(short) || typeid(keyT) == typeid(int) || typeid(keyT) == typeid(size_t) || typeid(keyT) == typeid(long) || typeid(keyT) == typeid(long long))
 			{
 				int hash = key;
 				hash = hash * (hash < bucket_count) + (bucket_count % hash) * (hash >= bucket_count);
@@ -226,16 +225,17 @@ public:
 
 				return hash;
 			}
-			if (kt == typeid(char*) || kt == typeid(std::string))
+			if (typeid(keyT) == typeid(char*) || typeid(keyT) == typeid(std::string))
 			{
 				size_t hash = 0;
 
 				char currentC;
 				size_t i = 0;
-				while (currentC = key[i] && i < 20)
+				/*std::string parsed_key = std::string(key);
+				while (currentC = parsed_key[i] && i < 20)
 				{
 					hash += currentC;
-				}
+				}*/
 				
 				hash %= bucket_count;
 
@@ -270,7 +270,7 @@ public:
 			for (size_t i = 0; i < bucket_count && keys && values; i++)
 			{
 				keys[i]->free();
-				values[i]->free()
+				values[i]->free();
 			}
 			std::free(keys);
 			std::free(values);

@@ -424,7 +424,7 @@ public:
 
 	static int* TwoSum(DataStructures::SinglyLinkedListNode<int>* numbers, int target)
 	{
-		DataStructures::HashTable<int, int> table = DataStructures::HashTable<int>(100);
+		DataStructures::HashTable<int, int> table = DataStructures::HashTable<int, int>(100);
 
 		DataStructures::SinglyLinkedListNode<int>* current_number = numbers;
 		int i = 0;
@@ -467,6 +467,61 @@ public:
 		}
 
 		return result;
+	}
+
+	static int* TrappingRain(int* block_heights, size_t bucket_count, size_t* grid_square_count)
+	{
+		size_t max_height = 0;
+		for (size_t i = 0; i < bucket_count; i++)
+		{
+			max_height += (block_heights[i] - max_height) * ((max_height) < block_heights[i]);
+		}
+
+		size_t plane_size = max_height * (bucket_count + 1);
+		int* plane = new int[plane_size];
+		for (size_t i = 0; i < plane_size; i++)
+		{
+			plane[i] = 0;
+		}
+
+		// Draw plane
+		for (int y = max_height - 1; y >= 0; y--)
+		{
+			bool x_continue = true;
+			bool wall_before = 0;
+			bool found_second_wall = 0;
+			for (size_t x = 0; x < bucket_count && x_continue; x++)
+			{
+				size_t coordinate = (max_height - 1 - y) * (bucket_count + 1) + (x /*+ (y < (max_height - 1))*/);
+
+				// Wall data
+				bool wall_previous_to_this_wall_exists = wall_before;
+				bool at_wall = (block_heights[x] - 1) >= y;
+				wall_before = at_wall || wall_before;
+
+				bool at_second_wall = at_wall && wall_previous_to_this_wall_exists;
+
+				// Reset values as if this wall was the first when a second wall is reached
+				found_second_wall = !at_second_wall && found_second_wall;
+
+				// Draw plane
+				plane[coordinate] += at_wall;
+				plane[coordinate] += (found_second_wall && !at_wall) * 2;
+				
+				
+				for (size_t search_x = x + 1; search_x < bucket_count && at_wall && !found_second_wall; search_x++)
+				{
+					size_t search_coordinate = (max_height - 1 - y) * (bucket_count) + (search_x);
+					found_second_wall = (block_heights[search_x] - 1) >= y;
+				}
+				x_continue = found_second_wall;
+			}
+
+			plane[y * (bucket_count + 1) - 1] = 3;
+		}
+
+		*grid_square_count = plane_size;
+		return plane;
 	}
 };
 

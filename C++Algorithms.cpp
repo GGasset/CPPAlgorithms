@@ -13,6 +13,7 @@ void HashTableDemonstration();
 void ReverseDemonstration();
 void TwoSumDemonstration();
 void LongestParenthesisSubtringDemonstration();
+void TrappingRainWaterDemonstration();
 
 static void ParenthesisMenu()
 {
@@ -106,11 +107,12 @@ int main()
     menu += "\"hash table\" To use a data structure that stores key-value pairs\n";
     menu += "\"reverse inplace\" to reverse a fixed size integer array inplace (without creating a copy)\n";
     menu += "\"two sum\" to find two values that sum up to a target value\n";
+    menu += "\"trapping rain water\" LeetCode Difficulty: Hard";
     while (true)
     {
         try
         {
-            std::cout << menu << std::endl;
+            std::cout << menu << std::endl << std::endl;
             std::cin.getline(input, sizeof(char) * 100);
             if (!std::strcmp(input, "cancel"))
                 break;
@@ -130,6 +132,8 @@ int main()
                 ReverseDemonstration();
             if (!std::strcmp(input, "two sum"))
                 TwoSumDemonstration();
+            if (!std::strcmp(input, "trapping rain water"))
+                TrappingRainWaterDemonstration();
         }
         catch (const std::string& e)
         {
@@ -316,7 +320,7 @@ void ReverseLinkedList()
 
 void HashTableDemonstration()
 {
-    DataStructures::HashTable<std::string> table = DataStructures::HashTable<std::string>(500);
+    DataStructures::HashTable<int, std::string> table = DataStructures::HashTable<int, std::string>(500);
 
     char* decision = (char*)malloc(sizeof(char) * 50);
     char* key = (char*)malloc(sizeof(char) * 50);
@@ -455,7 +459,7 @@ void LongestParenthesisSubtringDemonstration()
     char* in = new char[2000];
     while (true)
     {
-        std::cout << "Enter a parenthesis string [only '(' or ')']" << std::endl << "String: ";
+        std::cout << "Type \"cancel\" to exit this demonstration" << std::endl << "Enter a parenthesis string [only '(' or ')']" << std::endl << "String: ";
         std::cin.getline(in, 2000);
         if (!strcmp(in, "cancel"))
             break;
@@ -468,6 +472,51 @@ void LongestParenthesisSubtringDemonstration()
         }
 
         std::cout << "Longest valid substring: " << output << std::endl << std::endl;
+    }
+    delete[] in;
+}
+
+void TrappingRainWaterDemonstration()
+{
+    char* in = new char[2000];
+    while (true)
+    {
+        std::cout << "Type \"cancel\" to exit this demonstration" << std::endl << "Enter a list of heights separated by spaces: ";
+        if (!strcmp(in, "cancel"))
+            break;
+
+        std::cin.getline(in, 2000);
+        auto numbers = GetListInput(in);
+        int* heights = numbers->ToArray();
+        size_t height_count = numbers->GetLength();
+        numbers->free();
+
+        size_t plane_size = 0;
+        int* plane = Algorithms::TrappingRain(heights, height_count, &plane_size);
+        std::string out = std::string();
+        for (size_t i = 0; i < plane_size; i++)
+        {
+            switch (plane[i])
+            {
+            case 0:
+                out += ' ';
+                break;
+            case 1:
+                out += '#';
+                break;
+            case 2:
+                out += '+';
+                break;
+            case 3:
+                out += "\n";
+                break;
+            default:
+                break;
+            }
+        }
+        
+        std::cout << out << std::endl;
+        delete[] heights;
     }
     delete[] in;
 }
