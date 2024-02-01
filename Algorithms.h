@@ -523,5 +523,62 @@ public:
 		*grid_square_count = plane_size;
 		return plane;
 	}
+
+	static std::string ShortestPalindrome(std::string in)
+	{
+		size_t start_in_len = in.length();
+		bool odd_len = start_in_len % 2;
+
+		bool found_palindrome_start_mid_string = false;
+		size_t shortest_palindrome_middle_i = 0;
+		size_t distance_to_initial_end = 0;
+		size_t middle = start_in_len / 2;
+		for (size_t i = middle; (i < start_in_len - 1) && !found_palindrome_start_mid_string; i++)
+		{
+			found_palindrome_start_mid_string = CanBecomePalindrome(in, i);
+			shortest_palindrome_middle_i = i;
+			distance_to_initial_end = start_in_len - i - 1;
+
+			// Palindrome check
+			if (distance_to_initial_end == middle)
+				return in;
+		}
+
+		std::string out = std::string(in);
+		for (size_t i = 1; i < (start_in_len) && !found_palindrome_start_mid_string; i++)
+		{
+			out += in[start_in_len - i - 1];
+		}
+
+		for (size_t i = 0; (i < (shortest_palindrome_middle_i - distance_to_initial_end)) && found_palindrome_start_mid_string; i++)
+		{
+			size_t to_add_i = shortest_palindrome_middle_i - distance_to_initial_end - i - 1;
+			out += in[to_add_i];
+		}
+
+		return out;
+	}
+	
+private:
+	static bool CanBecomePalindrome(std::string in, size_t middle_character_i)
+	{
+		size_t current_offset = 1;
+		while (char positive_offset_c = in[middle_character_i + current_offset])
+		{
+			size_t negative_offset_i = middle_character_i - current_offset;
+			if (negative_offset_i < 0)
+				return false;
+
+			char negative_offset_c = in[negative_offset_i];
+			if (positive_offset_c != negative_offset_c)
+				return false;
+
+			current_offset++;
+		}
+
+		return true;
+	}
+
+public:
 };
 

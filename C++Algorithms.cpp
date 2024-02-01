@@ -14,6 +14,7 @@ void ReverseDemonstration();
 void TwoSumDemonstration();
 void LongestParenthesisSubtringDemonstration();
 void TrappingRainWaterDemonstration();
+void ShortestPalindromeDemonstration();
 
 static void ParenthesisMenu()
 {
@@ -107,7 +108,8 @@ int main()
     menu += "\"hash table\" To use a data structure that stores key-value pairs\n";
     menu += "\"reverse inplace\" to reverse a fixed size integer array inplace (without creating a copy)\n";
     menu += "\"two sum\" to find two values that sum up to a target value\n";
-    menu += "\"trapping rain water\" LeetCode Difficulty: Hard";
+    menu += "\"trapping rain water\" LeetCode Difficulty: Hard\n";
+    menu += "\"shortest palindrome\" outputs the shortest palindrome given a text (LeetCode Difficulty: Hard)\n";
     while (true)
     {
         try
@@ -134,6 +136,8 @@ int main()
                 TwoSumDemonstration();
             if (!std::strcmp(input, "trapping rain water"))
                 TrappingRainWaterDemonstration();
+            if (!std::strcmp(input, "shortest palindrome"))
+                ShortestPalindromeDemonstration();
         }
         catch (const std::string& e)
         {
@@ -515,9 +519,34 @@ void TrappingRainWaterDemonstration()
             }
         }
         
-        std::cout << out << std::endl;
+        std::cout << out << std::endl << std::endl << std::endl;
         delete[] heights;
     }
+    delete[] in;
+}
+
+void ShortestPalindromeDemonstration()
+{
+    char* in = new char[2000];
+
+    while (true)
+    {
+        std::cout << "LeetCode Difficulty: Hard" << std::endl;
+        std::cout << "Type \"cancel\" to exit this demonstration" << std::endl;
+        std::cout << "Enter text and the shortest possible palindrome of that text will be outputted." << std::endl;
+        std::cout << "Text: ";
+
+        std::cin.getline(in, 2000);
+
+        if (!strcmp(in, "cancel"))
+            break;
+
+        std::string out = Algorithms::ShortestPalindrome(std::string(in));
+        std::cout << out;
+        std::cout << std::endl;
+        std::cout << std::endl;
+    }
+
     delete[] in;
 }
 
